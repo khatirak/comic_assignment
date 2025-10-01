@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initBookReader() {
-    const book = document.querySelector('.book');
     const spreads = document.querySelectorAll('.page-spread');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');

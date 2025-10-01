@@ -12,6 +12,40 @@ body {
     perspective: 1500px;
 }
 
+/* Index page specific styling */
+.container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+}
+
+.box h1 {
+    color: #5d4e37;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.instruction {
+    color: #8b7355;
+    font-size: 1.3em;
+    font-weight: 600;
+    margin: 0;
+    font-style: italic;
+}
+
 /* Book Container Styles */
 .book-container {
     display: flex;
