@@ -1,0 +1,413 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    perspective: 1500px;
+}
+
+/* Book Container Styles */
+.book-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.book {
+    position: relative;
+    width: 1200px; /* Double width for two pages */
+    height: 800px;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+/* Page Spread Styles */
+.page-spread {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    transform-style: preserve-3d;
+    transition: transform 0.8s ease;
+}
+
+/* Page Styles */
+.page {
+    width: 50%; /* Each page takes half the book width */
+    height: 100%;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transform-origin: left center;
+    transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+    backface-visibility: hidden;
+}
+
+.left-page {
+    border-radius: 10px 0 0 10px;
+    border-right: 2px solid #bbb;
+    box-shadow: inset -7px 0 10px rgba(0,0,0,0.1);
+}
+
+.right-page {
+    border-radius: 0 10px 10px 0;
+    border-left: 1px solid #ddd;
+    box-shadow: inset 7px 0 10px rgba(0,0,0,0.1);
+}
+
+/* Flipping animation for right pages */
+.right-page.flipping {
+    transform: rotateY(-180deg);
+    z-index: 10;
+}
+
+.page-content {
+    padding: 40px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-content h2 {
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+
+/* Image Placeholder */
+.image-placeholder {
+    width: 100%;
+    max-width: 500px;
+    height: 400px;
+    background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+    border: 3px dashed #ccc;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    transition: all 0.3s ease;
+}
+
+.image-placeholder:hover {
+    border-color: #999;
+    background: linear-gradient(45deg, #e8e8e8, #d8d8d8);
+}
+
+.placeholder-text {
+    font-size: 1.5em;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.placeholder-subtitle {
+    font-size: 1em;
+    color: #888;
+    font-style: italic;
+}
+
+/* Page Spread States */
+.spread-1 { z-index: 3; }
+.spread-2 { z-index: 2; }
+.spread-3 { z-index: 1; }
+
+/* Flipped states */
+.page-spread.flipped {
+    transform: rotateY(-180deg);
+}
+
+/* Hide spreads by default */
+.page-spread {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Show current spread */
+.page-spread.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Navigation */
+.navigation {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(255,255,255,0.9);
+    padding: 15px 30px;
+    border-radius: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.nav-btn {
+    background: linear-gradient(145deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#pageInfo {
+    font-weight: bold;
+    color: #333;
+    font-size: 1.1em;
+}
+
+/* Home Button */
+.home-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.home-btn button {
+    background: rgba(255,255,255,0.9);
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+.home-btn button:hover {
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .book {
+        width: 90vw;
+        height: 70vh;
+    }
+}
+
+@media (max-width: 768px) {
+    .book {
+        width: 95vw;
+        height: 60vh;
+    }
+    
+    .page-content {
+        padding: 15px;
+    }
+    
+    .page-content h2 {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+    }
+    
+    .image-placeholder {
+        height: 250px;
+    }
+    
+    .placeholder-text {
+        font-size: 1.2em;
+    }
+    
+    .navigation {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* Walrus styling */
+.walrus {
+    position: absolute;
+    width: 360px;
+    height: 500px;
+    background-image: url('img/wally_straight.png');
+    background-size: cover;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    opacity: 1;
+    transform-origin: center;
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Cropping the walrus image from (0,0) to (360,500) */
+.walrus::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 360px;
+    height: 500px;
+    background-image: url('img/wally_straight.png');
+    background-size: cover;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    clip-path: inset(0 0 0 0);
+}
+
+/* Position classes */
+.bottom-left {
+    bottom: 0;
+    left: 0;
+}
+
+.bottom-center {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.bottom-right {
+    bottom: 0;
+    right: 0;
+}
+
+.top-left {
+    top: 0;
+    left: 0;
+}
+
+.top-center {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.top-right {
+    top: 0;
+    right: 0;
+}
+
+/* Animation classes */
+.walrus.appear {
+    transform: translateY(0);
+}
+
+.walrus.hide {
+    transform: translateY(100vh);
+}
+
+/* Apply rotations based on data-angle */
+.walrus[data-angle="45"] {
+    transform: rotate(45deg);
+}
+
+.walrus[data-angle="0"] {
+    transform: rotate(0deg);
+}
+
+.walrus[data-angle="-45"] {
+    transform: rotate(-45deg);
+}
+
+.walrus[data-angle="135"] {
+    transform: rotate(135deg);
+}
+
+.walrus[data-angle="180"] {
+    transform: rotate(180deg);
+}
+
+.walrus[data-angle="-135"] {
+    transform: rotate(-135deg);
+}
+
+/* Override transforms for positioned elements */
+.bottom-center[data-angle="0"] {
+    transform: translateX(-50%) rotate(0deg);
+}
+
+.top-center[data-angle="180"] {
+    transform: translateX(-50%) rotate(180deg);
+}
+
+/* Animation states with proper transform combinations */
+.walrus.appear[data-angle="45"] {
+    transform: rotate(45deg);
+}
+
+.walrus.appear[data-angle="0"] {
+    transform: rotate(0deg);
+}
+
+.walrus.appear[data-angle="-45"] {
+    transform: rotate(-45deg);
+}
+
+.walrus.appear[data-angle="135"] {
+    transform: rotate(135deg);
+}
+
+.walrus.appear[data-angle="180"] {
+    transform: rotate(180deg);
+}
+
+.walrus.appear[data-angle="-135"] {
+    transform: rotate(-135deg);
+}
+
+.walrus.hide[data-angle="45"] {
+    transform: rotate(45deg) translateY(100vh);
+}
+
+.walrus.hide[data-angle="0"] {
+    transform: rotate(0deg) translateY(100vh);
+}
+
+.walrus.hide[data-angle="-45"] {
+    transform: rotate(-45deg) translateY(100vh);
+}
+
+.walrus.hide[data-angle="135"] {
+    transform: rotate(135deg) translateY(100vh);
+}
+
+.walrus.hide[data-angle="180"] {
+    transform: rotate(180deg) translateY(100vh);
+}
+
+.walrus.hide[data-angle="-135"] {
+    transform: rotate(-135deg) translateY(100vh);
+}
+
+/* Special cases for centered elements */
+.bottom-center.appear[data-angle="0"] {
+    transform: translateX(-50%) rotate(0deg);
+}
+
+.top-center.appear[data-angle="180"] {
+    transform: translateX(-50%) rotate(180deg);
+}
+
+.bottom-center.hide[data-angle="0"] {
+    transform: translateX(-50%) rotate(0deg) translateY(100vh);
+}
+
+.top-center.hide[data-angle="180"] {
+    transform: translateX(-50%) rotate(180deg) translateY(100vh);
+}
