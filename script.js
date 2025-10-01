@@ -39,12 +39,14 @@ function initInteractiveComic() {
     // Navigation buttons
     prevBtn.addEventListener('click', function() {
         if (!isAnimating && storyFlow[currentPage].prev) {
+            playPageSound();
             navigateToPage(storyFlow[currentPage].prev);
         }
     });
     
     nextBtn.addEventListener('click', function() {
         if (!isAnimating && storyFlow[currentPage].next) {
+            playPageSound();
             navigateToPage(storyFlow[currentPage].next);
         }
     });
@@ -54,8 +56,10 @@ function initInteractiveComic() {
         if (isAnimating) return;
         
         if (e.key === 'ArrowLeft' && storyFlow[currentPage].prev) {
+            playPageSound();
             navigateToPage(storyFlow[currentPage].prev);
         } else if (e.key === 'ArrowRight' && storyFlow[currentPage].next) {
+            playPageSound();
             navigateToPage(storyFlow[currentPage].next);
         }
     });
@@ -72,6 +76,11 @@ function initInteractiveComic() {
         // Restart button handler
         if (e.target.classList.contains('restart-btn')) {
             navigateToPage('1');
+        }
+        
+        // Image click handler for modal
+        if (e.target.classList.contains('comic-image')) {
+            openImageModal(e.target.src, e.target.alt);
         }
     });
     
@@ -123,6 +132,11 @@ function initInteractiveComic() {
         const targetSpread = document.querySelector(`[data-page="${pageId}"]`);
         if (targetSpread) {
             targetSpread.classList.add('active');
+        }
+        
+        // Play ending sound for final pages
+        if (storyFlow[pageId] && storyFlow[pageId].ending) {
+            playRandomEndingSound();
         }
     }
     
@@ -178,6 +192,9 @@ function initWalrusAnimation() {
         setTimeout(() => {
             showWalrus(walrus);
             
+            // Play random wally sound (25% chance of no sound)
+            playRandomWallySound();
+            
             // Hide after 2 seconds of being visible
             setTimeout(() => {
                 hideWalrus(walrus);
@@ -209,4 +226,92 @@ function initWalrusAnimation() {
             });
         }, 1000);
     }, totalDuration);
+}
+
+// Image Modal Functions
+function openImageModal(imageSrc, imageAlt) {
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    
+    modalImage.src = imageSrc;
+    modalImage.alt = imageAlt;
+    modal.classList.add('show');
+    
+    // Prevent body scroll when modal is open
+    document.body.style.overflow = 'hidden';
+}
+
+function closeImageModal() {
+    const modal = document.getElementById('imageModal');
+    modal.classList.remove('show');
+    
+    // Restore body scroll
+    document.body.style.overflow = 'auto';
+}
+
+// Add event listeners for modal functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('imageModal');
+    const closeBtn = document.querySelector('.close-modal');
+    
+    if (modal && closeBtn) {
+        // Close modal when clicking the X button
+        closeBtn.addEventListener('click', closeImageModal);
+        
+        // Close modal when clicking outside the image
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeImageModal();
+            }
+        });
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.classList.contains('show')) {
+                closeImageModal();
+            }
+        });
+    }
+});
+
+// Sound Functions
+function playRandomWallySound() {
+    // 25% chance of no sound, 75% chance of playing one of the three sounds
+    const random = Math.random();
+    
+    if (random < 0.25) {
+        // No sound (25% chance)
+        return;
+    } else if (random < 0.5) {
+        // Play wally1.mp3 (25% chance)
+        playSound('wally1Sound');
+    } else if (random < 0.75) {
+        // Play wally2.mp3 (25% chance)
+        playSound('wally2Sound');
+    } else {
+        // Play wally3.mp3 (25% chance)
+        playSound('wally3Sound');
+    }
+}
+
+function playPageSound() {
+    playSound('pageSound');
+}
+
+function playRandomEndingSound() {
+    const endings = ['ending1Sound', 'ending2Sound', 'ending3Sound', 'ending4Sound'];
+    const randomEnding = endings[Math.floor(Math.random() * endings.length)];
+    playSound(randomEnding);
+}
+
+function playSound(soundId) {
+    const audio = document.getElementById(soundId);
+    if (audio) {
+        // Reset audio to beginning and play
+        audio.currentTime = 0;
+        audio.play().catch(error => {
+            // Handle autoplay policy restrictions
+            console.log('Audio autoplay prevented:', error);
+        });
+    }
 }
