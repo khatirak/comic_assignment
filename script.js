@@ -1,39 +1,51 @@
-// Comic Book Reader Script
+// Interactive Comic Book Script
 document.addEventListener('DOMContentLoaded', function() {
     // Check if we're on the comic page
     if (document.querySelector('.book-container')) {
-        initBookReader();
+        initInteractiveComic();
     } else {
         // Original walrus animation for index page
         initWalrusAnimation();
     }
 });
 
-function initBookReader() {
+function initInteractiveComic() {
     const spreads = document.querySelectorAll('.page-spread');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
-    const pageInfo = document.getElementById('pageInfo');
     
-    let currentSpread = 0;
-    const totalSpreads = spreads.length;
+    // Story structure
+    const storyFlow = {
+        '1': { next: '2', prev: null },
+        '2': { next: '3', prev: '1' },
+        '3': { next: null, prev: '2', choices: ['a1', 'b1'] },
+        'a1': { next: 'a2', prev: '3' },
+        'a2': { next: null, prev: 'a1', choices: ['a2a', 'a2b'] },
+        'a2a': { next: null, prev: 'a2', ending: true },
+        'a2b': { next: null, prev: 'a2', ending: true },
+        'b1': { next: 'b2', prev: '3' },
+        'b2': { next: null, prev: 'b1', choices: ['b3a', 'b3b'] },
+        'b3a': { next: null, prev: 'b2', ending: true },
+        'b3b': { next: null, prev: 'b2', ending: true }
+    };
+    
+    let currentPage = '1';
     let isAnimating = false;
     
-    // Initialize book state
-    showSpread(0);
-    updatePageInfo();
+    // Initialize comic state
+    showPage('1');
     updateNavigationButtons();
     
     // Navigation buttons
     prevBtn.addEventListener('click', function() {
-        if (!isAnimating && currentSpread > 0) {
-            flipToSpread(currentSpread - 1);
+        if (!isAnimating && storyFlow[currentPage].prev) {
+            navigateToPage(storyFlow[currentPage].prev);
         }
     });
     
     nextBtn.addEventListener('click', function() {
-        if (!isAnimating && currentSpread < totalSpreads - 1) {
-            flipToSpread(currentSpread + 1);
+        if (!isAnimating && storyFlow[currentPage].next) {
+            navigateToPage(storyFlow[currentPage].next);
         }
     });
     
@@ -41,69 +53,62 @@ function initBookReader() {
     document.addEventListener('keydown', function(e) {
         if (isAnimating) return;
         
-        if (e.key === 'ArrowLeft' && currentSpread > 0) {
-            flipToSpread(currentSpread - 1);
-        } else if (e.key === 'ArrowRight' && currentSpread < totalSpreads - 1) {
-            flipToSpread(currentSpread + 1);
+        if (e.key === 'ArrowLeft' && storyFlow[currentPage].prev) {
+            navigateToPage(storyFlow[currentPage].prev);
+        } else if (e.key === 'ArrowRight' && storyFlow[currentPage].next) {
+            navigateToPage(storyFlow[currentPage].next);
         }
     });
     
-    function flipToSpread(targetSpread) {
-        if (isAnimating || targetSpread === currentSpread) return;
+    // Choice button handlers
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('choice-btn')) {
+            const choice = e.target.getAttribute('data-path');
+            if (choice && !isAnimating) {
+                navigateToPage(choice);
+            }
+        }
+        
+        // Restart button handler
+        if (e.target.classList.contains('restart-btn')) {
+            navigateToPage('1');
+        }
+    });
+    
+    function navigateToPage(pageId) {
+        if (isAnimating || pageId === currentPage) return;
         
         isAnimating = true;
         
-        if (targetSpread > currentSpread) {
-            // Forward flip - animate the right page
-            flipNext();
-        } else {
-            // Backward flip - animate the right page
-            flipPrev();
-        }
-    }
-    
-    function flipNext() {
-        if (currentSpread < totalSpreads - 1) {
-            const currentRightPage = spreads[currentSpread].querySelector('.right-page');
-            if (currentRightPage) {
-                currentRightPage.classList.add('flipping');
-                
-                setTimeout(() => {
-                    currentSpread++;
-                    showSpread(currentSpread);
-                    updatePageInfo();
-                    updateNavigationButtons();
-                    isAnimating = false;
-                }, 800);
+        // Animate page transition
+        const currentSpread = document.querySelector(`[data-page="${currentPage}"]`);
+        const targetSpread = document.querySelector(`[data-page="${pageId}"]`);
+        
+        if (currentSpread && targetSpread) {
+            // Add flipping animation to current page
+            const rightPage = currentSpread.querySelector('.right-page');
+            if (rightPage) {
+                rightPage.classList.add('flipping');
             }
-        } else {
-            isAnimating = false;
-        }
-    }
-    
-    function flipPrev() {
-        if (currentSpread > 0) {
-            currentSpread--;
-            showSpread(currentSpread);
             
             setTimeout(() => {
-                const rightPage = spreads[currentSpread].querySelector('.right-page');
-                if (rightPage) {
-                    rightPage.classList.add('flipping');
-                    setTimeout(() => {
-                        rightPage.classList.remove('flipping');
-                    }, 50);
-                }
-                updatePageInfo();
+                currentPage = pageId;
+                showPage(currentPage);
                 updateNavigationButtons();
+                
+                // Remove flipping class
+                if (rightPage) {
+                    rightPage.classList.remove('flipping');
+                }
+                
                 isAnimating = false;
-            }, 50);
+            }, 800);
         } else {
             isAnimating = false;
         }
     }
     
-    function showSpread(spreadIndex) {
+    function showPage(pageId) {
         // Hide all spreads
         spreads.forEach(spread => {
             spread.classList.remove('active');
@@ -115,32 +120,28 @@ function initBookReader() {
         });
         
         // Show the target spread
-        spreads[spreadIndex].classList.add('active');
-    }
-    
-    function updatePageInfo() {
-        const startPage = currentSpread * 2 + 1;
-        const endPage = Math.min((currentSpread + 1) * 2, 6);
-        pageInfo.textContent = `Pages ${startPage}-${endPage} of 6`;
+        const targetSpread = document.querySelector(`[data-page="${pageId}"]`);
+        if (targetSpread) {
+            targetSpread.classList.add('active');
+        }
     }
     
     function updateNavigationButtons() {
-        prevBtn.disabled = currentSpread === 0;
-        nextBtn.disabled = currentSpread === totalSpreads - 1;
+        const hasPrev = storyFlow[currentPage].prev !== null;
+        const hasNext = storyFlow[currentPage].next !== null;
+        const isEnding = storyFlow[currentPage].ending === true;
+        
+        prevBtn.disabled = !hasPrev;
+        nextBtn.disabled = !hasNext;
+        
+        // Hide navigation for ending pages
+        const navigation = document.querySelector('.navigation');
+        if (isEnding) {
+            navigation.style.display = 'none';
+        } else {
+            navigation.style.display = 'flex';
+        }
     }
-    
-    // Add click handlers to spreads for easy navigation
-    spreads.forEach((spread, index) => {
-        spread.addEventListener('click', function() {
-            if (!isAnimating) {
-                if (index > currentSpread) {
-                    flipToSpread(index);
-                } else if (index < currentSpread) {
-                    flipToSpread(index);
-                }
-            }
-        });
-    });
 }
 
 function initWalrusAnimation() {

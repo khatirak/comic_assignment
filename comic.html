@@ -3,85 +3,243 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comic Book Reader</title>
+    <title>Interactive Comic Book</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Navigation Bar -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="comic.html" class="nav-link active">Comic</a>
+            <a href="about.html" class="nav-link">About</a>
+        </div>
+    </nav>
+    
     <div class="book-container">
+        <div class="comic-title">
+            <h1>Where Wally the Walrus</h1>
+        </div>
         <div class="book">
-            <!-- Page Spread 1: Pages 1-2 -->
-            <div class="page-spread spread-1">
-                <div class="page left-page page-1">
+            <!-- Main Story Pages 1-5 -->
+            <div class="page-spread spread-1" data-page="1">
+                <div class="page left-page">
                     <div class="page-content">
-                        <div class="image-placeholder">
-                            <div class="placeholder-text">Your Image Here</div>
-                            <div class="placeholder-subtitle">Replace with your comic panel</div>
-                        </div>
+                        <img src="img/1.png" alt="Page 1" class="comic-image">
                         <div class="page-text">
-                            <p>This is where you can add your comic text, dialogue, or narration for Page 1.</p>
+                            <p>The adventure begins...</p>
                         </div>
                     </div>
                 </div>
-                <div class="page right-page page-2">
+                <div class="page right-page">
                     <div class="page-content">
-                        <div class="image-placeholder">
-                            <div class="placeholder-text">Your Image Here</div>
-                            <div class="placeholder-subtitle">Replace with your comic panel</div>
-                        </div>
+                        <img src="img/2.png" alt="Page 2" class="comic-image">
                         <div class="page-text">
-                            <p>This is where you can add your comic text, dialogue, or narration for Page 2.</p>
+                            <p>Our hero faces the first challenge...</p>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Page Spread 2: Pages 3-4 -->
-            <div class="page-spread spread-2">
-                <div class="page left-page page-3">
+            <div class="page-spread spread-2" data-page="2">
+                <div class="page left-page">
                     <div class="page-content">
-                        <div class="image-placeholder">
-                            <div class="placeholder-text">Your Image Here</div>
-                            <div class="placeholder-subtitle">Replace with your comic panel</div>
-                        </div>
+                        <img src="img/3.png" alt="Page 3" class="comic-image">
                         <div class="page-text">
-                            <p>This is where you can add your comic text, dialogue, or narration for Page 3.</p>
+                            <p>The plot thickens...</p>
                         </div>
                     </div>
                 </div>
-                <div class="page right-page page-4">
+                <div class="page right-page">
                     <div class="page-content">
-                        <div class="image-placeholder">
-                            <div class="placeholder-text">Your Image Here</div>
-                            <div class="placeholder-subtitle">Replace with your comic panel</div>
-                        </div>
+                        <img src="img/4.png" alt="Page 4" class="comic-image">
                         <div class="page-text">
-                            <p>This is where you can add your comic text, dialogue, or narration for Page 4.</p>
+                            <p>Danger approaches...</p>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Page Spread 3: Pages 5-6 -->
-            <div class="page-spread spread-3">
-                <div class="page left-page page-5">
+            <div class="page-spread spread-3" data-page="3">
+                <div class="page left-page">
                     <div class="page-content">
-                        <div class="image-placeholder">
-                            <div class="placeholder-text">Your Image Here</div>
-                            <div class="placeholder-subtitle">Replace with your comic panel</div>
-                        </div>
+                        <img src="img/5.png" alt="Page 5" class="comic-image">
                         <div class="page-text">
-                            <p>This is where you can add your comic text, dialogue, or narration for Page 5.</p>
+                            <p>The moment of choice arrives...</p>
                         </div>
                     </div>
                 </div>
-                <div class="page right-page page-6">
+                <div class="page right-page">
                     <div class="page-content">
-                        <div class="image-placeholder">
-                            <div class="placeholder-text">Your Image Here</div>
-                            <div class="placeholder-subtitle">Replace with your comic panel</div>
+                        <div class="choice-container">
+                            <h3>Choose Your Path:</h3>
+                            <div class="choice-buttons">
+                                <button class="choice-btn" data-path="a1">Path A</button>
+                                <button class="choice-btn" data-path="b1">Path B</button>
+                            </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Branch A: 5a1 -> 5a2 -> (5a2a or 5a2b) -->
+            <div class="page-spread spread-a1" data-page="a1" data-branch="a">
+                <div class="page left-page">
+                    <div class="page-content">
+                        <img src="img/5a1.png" alt="Page 5a1" class="comic-image">
                         <div class="page-text">
-                            <p>This is where you can add your comic text, dialogue, or narration for Page 6.</p>
+                            <p>You chose Path A...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="page right-page">
+                    <div class="page-content">
+                        <img src="img/5a2.png" alt="Page 5a2" class="comic-image">
+                        <div class="page-text">
+                            <p>Another choice awaits...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="page-spread spread-a2" data-page="a2" data-branch="a">
+                <div class="page left-page">
+                    <div class="page-content">
+                        <div class="choice-container">
+                            <h3>Final Choice:</h3>
+                            <div class="choice-buttons">
+                                <button class="choice-btn" data-path="a2a">Option A</button>
+                                <button class="choice-btn" data-path="a2b">Option B</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="page right-page">
+                    <div class="page-content">
+                        <div class="page-text">
+                            <p>What will you decide?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="page-spread spread-a2a" data-page="a2a" data-branch="a">
+                <div class="page left-page">
+                    <div class="page-content">
+                        <img src="img/5a2a.png" alt="Page 5a2a" class="comic-image">
+                        <div class="page-text">
+                            <p>Ending A2A</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="page right-page">
+                    <div class="page-content">
+                        <div class="ending-text">
+                            <h3>The End</h3>
+                            <p>You've reached the end of this path!</p>
+                            <button class="restart-btn">Start Over</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="page-spread spread-a2b" data-page="a2b" data-branch="a">
+                <div class="page left-page">
+                    <div class="page-content">
+                        <img src="img/5a2b.png" alt="Page 5a2b" class="comic-image">
+                        <div class="page-text">
+                            <p>Ending A2B</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="page right-page">
+                    <div class="page-content">
+                        <div class="ending-text">
+                            <h3>The End</h3>
+                            <p>You've reached the end of this path!</p>
+                            <button class="restart-btn">Start Over</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Branch B: 5b1 -> 5b2 -> 5b3 -> (5b3a or 5b3b) -->
+            <div class="page-spread spread-b1" data-page="b1" data-branch="b">
+                <div class="page left-page">
+                    <div class="page-content">
+                        <img src="img/5b1.png" alt="Page 5b1" class="comic-image">
+                        <div class="page-text">
+                            <p>You chose Path B...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="page right-page">
+                    <div class="page-content">
+                        <img src="img/5b2.png" alt="Page 5b2" class="comic-image">
+                        <div class="page-text">
+                            <p>The journey continues...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="page-spread spread-b2" data-page="b2" data-branch="b">
+                <div class="page left-page">
+                    <div class="page-content">
+                        <img src="img/5b3.png" alt="Page 5b3" class="comic-image">
+                        <div class="page-text">
+                            <p>One more choice...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="page right-page">
+                    <div class="page-content">
+                        <div class="choice-container">
+                            <h3>Final Choice:</h3>
+                            <div class="choice-buttons">
+                                <button class="choice-btn" data-path="b3a">Option A</button>
+                                <button class="choice-btn" data-path="b3b">Option B</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="page-spread spread-b3a" data-page="b3a" data-branch="b">
+                <div class="page left-page">
+                    <div class="page-content">
+                        <img src="img/5b3a.png" alt="Page 5b3a" class="comic-image">
+                        <div class="page-text">
+                            <p>Ending B3A</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="page right-page">
+                    <div class="page-content">
+                        <div class="ending-text">
+                            <h3>The End</h3>
+                            <p>You've reached the end of this path!</p>
+                            <button class="restart-btn">Start Over</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="page-spread spread-b3b" data-page="b3b" data-branch="b">
+                <div class="page left-page">
+                    <div class="page-content">
+                        <img src="img/5b3b.png" alt="Page 5b3b" class="comic-image">
+                        <div class="page-text">
+                            <p>Ending B3B</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="page right-page">
+                    <div class="page-content">
+                        <div class="ending-text">
+                            <h3>The End</h3>
+                            <p>You've reached the end of this path!</p>
+                            <button class="restart-btn">Start Over</button>
                         </div>
                     </div>
                 </div>
@@ -90,9 +248,8 @@
         
         <!-- Navigation Controls -->
         <div class="navigation">
-            <button id="prevBtn" class="nav-btn">← Previous</button>
-            <span id="pageInfo">Page 1 of 6</span>
-            <button id="nextBtn" class="nav-btn">Next →</button>
+            <button id="prevBtn" class="nav-btn">←</button>
+            <button id="nextBtn" class="nav-btn">→</button>
         </div>
         
         <!-- Back to Home Button -->

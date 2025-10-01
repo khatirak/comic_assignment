@@ -4,12 +4,102 @@
     box-sizing: border-box;
 }
 
-body {
+/* Top Navigation Bar */
+.top-nav {
+    background: linear-gradient(145deg, #8b7355, #6b5b47);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
+    gap: 40px;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 15px 25px;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border-radius: 5px;
     font-family: 'Georgia', serif;
-    background: #f5f5f0;
+}
+
+.nav-link:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-1px);
+}
+
+.nav-link.active {
+    background: rgba(255,255,255,0.2);
+    font-weight: bold;
+}
+
+/* About Page Styles */
+.about-container {
     min-height: 100vh;
-    overflow-x: hidden;
-    perspective: 1500px;
+    background: #f5f5f0;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.about-content {
+    max-width: 800px;
+    background: rgba(255,255,255,0.95);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px);
+}
+
+.about-content h1 {
+    color: #5d4e37;
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    text-align: center;
+    font-family: 'Georgia', serif;
+}
+
+.about-content h2 {
+    color: #8b7355;
+    font-size: 1.8em;
+    margin: 30px 0 15px 0;
+    font-family: 'Georgia', serif;
+}
+
+.about-text p {
+    color: #5d4e37;
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-family: 'Georgia', serif;
+}
+
+.about-text ul {
+    color: #5d4e37;
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin: 15px 0 20px 20px;
+    font-family: 'Georgia', serif;
+}
+
+.about-text li {
+    margin-bottom: 8px;
+}
+
+.about-text strong {
+    color: #8b7355;
 }
 
 /* Index page specific styling */
@@ -54,6 +144,21 @@ body {
     justify-content: center;
     min-height: 100vh;
     padding: 20px;
+}
+
+/* Comic Title */
+.comic-title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.comic-title h1 {
+    color: #5d4e37;
+    font-size: 3em;
+    font-weight: bold;
+    font-family: 'Georgia', serif;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    margin: 0;
 }
 
 .book {
@@ -145,6 +250,16 @@ body {
     font-style: italic;
 }
 
+/* Comic Image Styling */
+.comic-image {
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    margin-bottom: 30px;
+}
+
 /* Page Text Styling */
 .page-text {
     width: 100%;
@@ -161,10 +276,111 @@ body {
     font-family: 'Georgia', serif;
 }
 
+/* Choice Container Styling */
+.choice-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+}
+
+.choice-container h3 {
+    color: #5d4e37;
+    font-size: 1.8em;
+    margin-bottom: 30px;
+    font-family: 'Georgia', serif;
+}
+
+.choice-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 300px;
+}
+
+.choice-btn {
+    background: linear-gradient(145deg, #d4c4a8, #b8a082);
+    color: #5d4e37;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    font-family: 'Georgia', serif;
+}
+
+.choice-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    background: linear-gradient(145deg, #c4b498, #a8966e);
+}
+
+.choice-btn:active {
+    transform: translateY(-1px);
+}
+
+/* Ending Text Styling */
+.ending-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+}
+
+.ending-text h3 {
+    color: #5d4e37;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    font-family: 'Georgia', serif;
+}
+
+.ending-text p {
+    color: #8b7355;
+    font-size: 1.3em;
+    margin-bottom: 30px;
+    font-family: 'Georgia', serif;
+}
+
+.restart-btn {
+    background: linear-gradient(145deg, #8b7355, #6b5b47);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    font-family: 'Georgia', serif;
+}
+
+.restart-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    background: linear-gradient(145deg, #7a6549, #5a4a37);
+}
+
 /* Page Spread States */
-.spread-1 { z-index: 3; }
-.spread-2 { z-index: 2; }
-.spread-3 { z-index: 1; }
+.spread-1 { z-index: 10; }
+.spread-2 { z-index: 9; }
+.spread-3 { z-index: 8; }
+.spread-a1 { z-index: 7; }
+.spread-a2 { z-index: 6; }
+.spread-a2a { z-index: 5; }
+.spread-a2b { z-index: 4; }
+.spread-b1 { z-index: 7; }
+.spread-b2 { z-index: 6; }
+.spread-b3a { z-index: 5; }
+.spread-b3b { z-index: 4; }
 
 /* Flipped states */
 .page-spread.flipped {
@@ -188,6 +404,7 @@ body {
     margin-top: 30px;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 20px;
     background: rgba(255,255,255,0.9);
     padding: 15px 30px;
@@ -259,6 +476,45 @@ body {
 }
 
 @media (max-width: 768px) {
+    /* Navigation responsive */
+    .nav-container {
+        padding: 0 10px;
+        gap: 20px;
+    }
+    
+    .nav-link {
+        padding: 12px 15px;
+        font-size: 1em;
+    }
+    
+    /* Comic title responsive */
+    .comic-title h1 {
+        font-size: 2.2em;
+    }
+    
+    /* About page responsive */
+    .about-container {
+        padding: 20px 10px;
+    }
+    
+    .about-content {
+        padding: 20px;
+    }
+    
+    .about-content h1 {
+        font-size: 2em;
+    }
+    
+    .about-content h2 {
+        font-size: 1.5em;
+    }
+    
+    .about-text p,
+    .about-text ul {
+        font-size: 1em;
+    }
+    
+    /* Comic page responsive */
     .book {
         width: 95vw;
         height: 60vh;
@@ -273,17 +529,37 @@ body {
         margin-bottom: 15px;
     }
     
-    .image-placeholder {
+    .comic-image {
+        width: 250px;
         height: 250px;
     }
     
-    .placeholder-text {
-        font-size: 1.2em;
+    .choice-container h3 {
+        font-size: 1.4em;
+        margin-bottom: 20px;
+    }
+    
+    .choice-btn {
+        padding: 12px 25px;
+        font-size: 1em;
+    }
+    
+    .ending-text h3 {
+        font-size: 2em;
+    }
+    
+    .ending-text p {
+        font-size: 1.1em;
+    }
+    
+    .restart-btn {
+        padding: 12px 25px;
+        font-size: 1em;
     }
     
     .navigation {
-        flex-direction: column;
-        gap: 10px;
+        gap: 15px;
+        padding: 12px 20px;
     }
 }
 
