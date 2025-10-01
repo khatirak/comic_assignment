@@ -79,16 +79,9 @@ body {
     justify-content: center;
 }
 
-.page-content h2 {
-    color: #333;
-    margin-bottom: 30px;
-    font-size: 2em;
-}
-
 /* Image Placeholder */
 .image-placeholder {
-    width: 100%;
-    max-width: 500px;
+    width: 400px;
     height: 400px;
     background: linear-gradient(45deg, #f9f6f0, #f0e6d2);
     border: 3px dashed #d4c4a8;
@@ -97,7 +90,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 20px 0;
+    margin: 0 0 30px 0;
     transition: all 0.3s ease;
 }
 
@@ -116,6 +109,22 @@ body {
     font-size: 1em;
     color: #a68b5b;
     font-style: italic;
+}
+
+/* Page Text Styling */
+.page-text {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.page-text p {
+    color: #5d4e37;
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin: 0;
+    font-family: 'Georgia', serif;
 }
 
 /* Page Spread States */
