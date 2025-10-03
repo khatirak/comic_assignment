@@ -322,11 +322,6 @@ function playSpecificEndingSound(pageId) {
     }
 }
 
-function playRandomEndingSound() {
-    const endings = ['ending1Sound', 'ending2Sound', 'ending3Sound', 'ending4Sound'];
-    const randomEnding = endings[Math.floor(Math.random() * endings.length)];
-    playSound(randomEnding);
-}
 
 function playSound(soundId) {
     const audio = document.getElementById(soundId);
