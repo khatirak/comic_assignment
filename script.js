@@ -142,9 +142,9 @@ function initInteractiveComic() {
         if (storyFlow[pageId] && storyFlow[pageId].ending) {
             playSpecificEndingSound(pageId);
         } else {
-            // Play random wally sound for non-ending pages (30% chance)
+            // Play page sound for non-ending pages (30% chance)
             if (Math.random() < 0.3) {
-                playRandomWallySound();
+                playPageSound();
             }
         }
     }

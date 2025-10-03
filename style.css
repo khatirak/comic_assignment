@@ -217,6 +217,11 @@
 }
 
 /* Index page specific styling */
+body.index-page {
+    overflow: hidden;
+    height: 100vh;
+}
+
 .container {
     position: relative;
     width: 100vw;
