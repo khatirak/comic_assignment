@@ -227,12 +227,11 @@
 }
 
 .box {
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: rgba(255, 255, 255, 0);
     padding: 40px;
     border-radius: 15px;
     text-align: center;
     z-index: 10;
-    backdrop-filter: blur(10px);
 }
 
 .box h1 {
@@ -515,7 +514,10 @@
 
 /* Navigation */
 .navigation {
-    margin-top: 30px;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -524,6 +526,7 @@
     padding: 15px 30px;
     border-radius: 25px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    z-index: 100;
 }
 
 .nav-btn {
@@ -708,34 +711,34 @@
 
 /* Position classes */
 .bottom-left {
-    bottom: 0;
+    bottom: -20%;
     left: 0;
 }
 
 .bottom-center {
-    bottom: 0;
+    bottom: -20%;
     left: 50%;
     transform: translateX(-50%);
 }
 
 .bottom-right {
-    bottom: 0;
+    bottom: -20%;
     right: 0;
 }
 
 .top-left {
-    top: 0;
+    top: -20%;
     left: 0;
 }
 
 .top-center {
-    top: 0;
+    top: -20%;
     left: 50%;
     transform: translateX(-50%);
 }
 
 .top-right {
-    top: 0;
+    top: -20%;
     right: 0;
 }
 

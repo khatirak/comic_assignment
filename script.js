@@ -20,9 +20,9 @@ function initInteractiveComic() {
         '2': { next: '3', prev: '1' },
         '3': { next: null, prev: '2', choices: ['a1', 'b1'] },
         'a1': { next: 'a2', prev: '3' },
-        'a2': { next: null, prev: 'a1', choices: ['a2a', 'a2b'] },
-        'a2a': { next: null, prev: 'a2', ending: true },
-        'a2b': { next: null, prev: 'a2', ending: true },
+        'a2': { next: null, prev: 'a1', choices: ['a3a', 'a3b'] },
+        'a3a': { next: null, prev: 'a2', ending: true },
+        'a3b': { next: null, prev: 'a2', ending: true },
         'b1': { next: 'b2', prev: '3' },
         'b2': { next: null, prev: 'b1', choices: ['b3a', 'b3b'] },
         'b3a': { next: null, prev: 'b2', ending: true },
@@ -69,12 +69,14 @@ function initInteractiveComic() {
         if (e.target.classList.contains('choice-btn')) {
             const choice = e.target.getAttribute('data-path');
             if (choice && !isAnimating) {
+                playPageSound(); // Play page flick sound when choice is made
                 navigateToPage(choice);
             }
         }
         
         // Restart button handler
         if (e.target.classList.contains('restart-btn')) {
+            stopAllAudio(); // Stop all audio when restarting
             navigateToPage('1');
         }
         
@@ -87,6 +89,8 @@ function initInteractiveComic() {
     function navigateToPage(pageId) {
         if (isAnimating || pageId === currentPage) return;
         
+        // Stop all audio except page sound when navigating
+        stopAllAudioExceptPage();
         isAnimating = true;
         
         // Animate page transition
@@ -136,7 +140,12 @@ function initInteractiveComic() {
         
         // Play ending sound for final pages
         if (storyFlow[pageId] && storyFlow[pageId].ending) {
-            playRandomEndingSound();
+            playSpecificEndingSound(pageId);
+        } else {
+            // Play random wally sound for non-ending pages (30% chance)
+            if (Math.random() < 0.3) {
+                playRandomWallySound();
+            }
         }
     }
     
@@ -276,26 +285,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Sound Functions
 function playRandomWallySound() {
-    // 25% chance of no sound, 75% chance of playing one of the three sounds
+    // 10% chance of no sound, 90% chance of playing one of the three sounds
     const random = Math.random();
     
-    if (random < 0.25) {
-        // No sound (25% chance)
+    if (random < 0.1) {
+        // No sound (10% chance)
         return;
-    } else if (random < 0.5) {
-        // Play wally1.mp3 (25% chance)
+    } else if (random < 0.4) {
+        // Play wally1.mp3 (30% chance)
         playSound('wally1Sound');
-    } else if (random < 0.75) {
-        // Play wally2.mp3 (25% chance)
+    } else if (random < 0.7) {
+        // Play wally2.mp3 (30% chance)
         playSound('wally2Sound');
     } else {
-        // Play wally3.mp3 (25% chance)
+        // Play wally3.mp3 (30% chance)
         playSound('wally3Sound');
     }
 }
 
 function playPageSound() {
     playSound('pageSound');
+}
+
+function playSpecificEndingSound(pageId) {
+    // Map each ending page to its specific sound
+    const endingSounds = {
+        'a3a': 'ending1Sound',  // 5a3a.png -> ending1.mp3
+        'a3b': 'ending2Sound', // 5a3b.png -> ending2.mp3
+        'b3a': 'ending3Sound', // 5b3a.png -> ending3.mp3
+        'b3b': 'ending4Sound'  // 5b3b.png -> ending4.mp3
+    };
+    
+    const soundId = endingSounds[pageId];
+    if (soundId) {
+        playSound(soundId);
+    }
 }
 
 function playRandomEndingSound() {
@@ -314,4 +338,47 @@ function playSound(soundId) {
             console.log('Audio autoplay prevented:', error);
         });
     }
+}
+
+function stopAllAudio() {
+    // List of all audio elements to stop
+    const audioElements = [
+        'pageSound',
+        'ending1Sound', 
+        'ending2Sound',
+        'ending3Sound',
+        'ending4Sound',
+        'wally1Sound',
+        'wally2Sound',
+        'wally3Sound'
+    ];
+    
+    audioElements.forEach(soundId => {
+        const audio = document.getElementById(soundId);
+        if (audio) {
+            audio.pause();
+            audio.currentTime = 0;
+        }
+    });
+}
+
+function stopAllAudioExceptPage() {
+    // Stop all audio except page sound
+    const audioElements = [
+        'ending1Sound', 
+        'ending2Sound',
+        'ending3Sound',
+        'ending4Sound',
+        'wally1Sound',
+        'wally2Sound',
+        'wally3Sound'
+    ];
+    
+    audioElements.forEach(soundId => {
+        const audio = document.getElementById(soundId);
+        if (audio) {
+            audio.pause();
+            audio.currentTime = 0;
+        }
+    });
 }

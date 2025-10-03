@@ -18,7 +18,7 @@
     
     <div class="book-container">
         <div class="comic-title">
-            <h1>Where's Wally the Walrus</h1>
+            <img src="img/comic_title.png" alt="Where's Wally the Walrus" class="comic-title-image">
         </div>
         <div class="book">
             <!-- Main Story Pages 1-5 -->
@@ -72,10 +72,10 @@
                 <div class="page right-page">
                     <div class="page-content">
                         <div class="choice-container">
-                            <h3>Choose Your Path:</h3>
+                            <h3>Choose Your Path: <br>Are you a going to take Wally to the mysytery location?</h3>
                             <div class="choice-buttons">
-                                <button class="choice-btn" data-path="a1">Path A</button>
-                                <button class="choice-btn" data-path="b1">Path B</button>
+                                <button class="choice-btn" data-path="a1">Yes</button>
+                                <button class="choice-btn" data-path="b1">No</button>
                             </div>
                         </div>
                     </div>
@@ -105,30 +105,31 @@
             <div class="page-spread spread-a2" data-page="a2" data-branch="a">
                 <div class="page left-page">
                     <div class="page-content">
-                        <div class="choice-container">
-                            <h3>Final Choice:</h3>
-                            <div class="choice-buttons">
-                                <button class="choice-btn" data-path="a2a">Option A</button>
-                                <button class="choice-btn" data-path="a2b">Option B</button>
-                            </div>
+                        <img src="img/5a3.png" alt="Page 5a3" class="comic-image">
+                        <div class="page-text">
+                            <p>The story continues...</p>
                         </div>
                     </div>
                 </div>
                 <div class="page right-page">
                     <div class="page-content">
-                        <div class="page-text">
-                            <p>What will you decide?</p>
+                        <div class="choice-container">
+                            <h3>Your final choice: <br>Are you going to risk Wally escaping?</h3>
+                            <div class="choice-buttons">
+                                <button class="choice-btn" data-path="a3a">Yes</button>
+                                <button class="choice-btn" data-path="a3b">No</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="page-spread spread-a2a" data-page="a2a" data-branch="a">
+            <div class="page-spread spread-a3a" data-page="a3a" data-branch="a">
                 <div class="page left-page">
                     <div class="page-content">
-                        <img src="img/5a2a.png" alt="Page 5a2a" class="comic-image">
+                        <img src="img/5a3a.png" alt="Page 5a3a" class="comic-image">
                         <div class="page-text">
-                            <p>Ending A2A</p>
+                            <p>Ending A3A</p>
                         </div>
                     </div>
                 </div>
@@ -143,12 +144,12 @@
                 </div>
             </div>
             
-            <div class="page-spread spread-a2b" data-page="a2b" data-branch="a">
+            <div class="page-spread spread-a3b" data-page="a3b" data-branch="a">
                 <div class="page left-page">
                     <div class="page-content">
-                        <img src="img/5a2b.png" alt="Page 5a2b" class="comic-image">
+                        <img src="img/5a3b.png" alt="Page 5a3b" class="comic-image">
                         <div class="page-text">
-                            <p>Ending A2B</p>
+                            <p>Ending A3B</p>
                         </div>
                     </div>
                 </div>
@@ -195,10 +196,10 @@
                 <div class="page right-page">
                     <div class="page-content">
                         <div class="choice-container">
-                            <h3>Final Choice:</h3>
+                            <h3>Your final choice: <br>Are you going to have Wally listen to Sally?</h3>
                             <div class="choice-buttons">
-                                <button class="choice-btn" data-path="b3a">Option A</button>
-                                <button class="choice-btn" data-path="b3b">Option B</button>
+                                <button class="choice-btn" data-path="b3a">Yes</button>
+                                <button class="choice-btn" data-path="b3b">No</button>
                             </div>
                         </div>
                     </div>
@@ -281,6 +282,15 @@
     </audio>
     <audio id="ending4Sound" preload="auto">
         <source src="sound/ending4.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="wally1Sound" preload="auto">
+        <source src="sound/wally1.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="wally2Sound" preload="auto">
+        <source src="sound/wally2.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="wally3Sound" preload="auto">
+        <source src="sound/wally3.mp3" type="audio/mpeg">
     </audio>
     
     <script src="script.js"></script>
