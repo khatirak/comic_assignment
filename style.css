@@ -7,6 +7,8 @@
 
 body {
     font-family: 'Comic Sans MS', cursive, sans-serif;
+    background-color: #d4c4a8;
+    min-height: 100vh;
 }
 
 /* Common Variables */
@@ -19,13 +21,12 @@ body {
     --transition: all 0.3s ease;
 }
 
-/* Navigation */
+/* Top Navigation - Highest priority */
 .top-nav {
     background: linear-gradient(145deg, var(--secondary-color), #6b5b47);
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 1000; /* Highest navigation priority */
 }
 
 .nav-container {
@@ -33,21 +34,17 @@ body {
     margin: 0 auto;
     display: flex;
     justify-content: center;
-    padding: 0 20px;
-    gap: 40px;
+    gap: 150px;
 }
 
 .nav-link {
     color: white;
     text-decoration: none;
-    padding: 15px 25px;
     font-size: 1.1em;
-    font-weight: 600;
     transition: var(--transition);
-    border-radius: 5px;
+    border-radius: 0px;
     display: flex;
     align-items: center;
-    gap: 8px;
 }
 
 .nav-link:hover {
@@ -61,8 +58,8 @@ body {
 }
 
 .nav-image {
-    width: 50px;
-    height: 50px;
+    width: 190px;
+    height: 100px;
     object-fit: contain;
     filter: brightness(0) invert(1);
 }
@@ -213,185 +210,6 @@ body.index-page {
     line-height: 1.5;
 }
 
-/* Comic Book */
-.book-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 20px;
-}
-
-.comic-title {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.book {
-    position: relative;
-    width: 1200px;
-    height: 800px;
-    transform-style: preserve-3d;
-    transition: transform 0.6s ease;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-}
-
-.page-spread {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    transform-style: preserve-3d;
-    transition: transform 0.8s ease;
-    opacity: 0;
-    visibility: hidden;
-}
-
-.page-spread.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-.page {
-    width: 50%;
-    height: 100%;
-    background: var(--background-color);
-    box-shadow: var(--shadow);
-    transform-origin: left center;
-    transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
-    backface-visibility: hidden;
-}
-
-.left-page {
-    border-radius: 10px 0 0 10px;
-    border-right: 2px solid #bbb;
-    box-shadow: inset -7px 0 10px rgba(0,0,0,0.1);
-}
-
-.right-page {
-    border-radius: 0 10px 10px 0;
-    border-left: 1px solid #ddd;
-    box-shadow: inset 7px 0 10px rgba(0,0,0,0.1);
-}
-
-.right-page.flipping {
-    transform: rotateY(-180deg);
-    z-index: 10;
-}
-
-.page-content {
-    padding: 40px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.comic-image {
-    width: 400px;
-    height: 400px;
-    object-fit: cover;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-    margin-bottom: 30px;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.comic-image:hover {
-    transform: scale(1.02);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.page-text {
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-    margin-top: 20px;
-}
-
-.page-text p {
-    color: var(--primary-color);
-    font-size: 1.1em;
-    line-height: 1.6;
-    margin: 0;
-}
-
-.choice-container, .ending-text {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    text-align: center;
-}
-
-.choice-container h3 {
-    color: var(--primary-color);
-    font-size: 1.8em;
-    margin-bottom: 30px;
-}
-
-.choice-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
-    max-width: 300px;
-}
-
-.choice-btn {
-    background: linear-gradient(145deg, var(--accent-color), #b8a082);
-    color: var(--primary-color);
-    border: none;
-    padding: 15px 30px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 1.2em;
-    font-weight: 600;
-    transition: var(--transition);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.choice-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-    background: linear-gradient(145deg, #c4b498, #a8966e);
-}
-
-.ending-text h3 {
-    color: var(--primary-color);
-    font-size: 2.5em;
-    margin-bottom: 20px;
-}
-
-.ending-text p {
-    color: var(--secondary-color);
-    font-size: 1.3em;
-    margin-bottom: 30px;
-}
-
-.restart-btn {
-    background: linear-gradient(145deg, var(--secondary-color), #6b5b47);
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 1.1em;
-    font-weight: 600;
-    transition: var(--transition);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.restart-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-    background: linear-gradient(145deg, #7a6549, #5a4a37);
-}
-
 /* Navigation Controls */
 .navigation {
     position: absolute;
@@ -457,61 +275,6 @@ body.index-page {
     box-shadow: var(--shadow);
 }
 
-/* Image Modal */
-.image-modal {
-    display: none;
-    position: fixed;
-    z-index: 2000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    animation: fadeIn 0.3s ease;
-}
-
-.image-modal.show {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    max-width: 90%;
-    max-height: 90%;
-    position: relative;
-    animation: zoomIn 0.3s ease;
-}
-
-.modal-image {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-}
-
-.close-modal {
-    position: absolute;
-    top: -40px;
-    right: 0;
-    color: white;
-    font-size: 40px;
-    font-weight: bold;
-    cursor: pointer;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: var(--transition);
-}
-
-.close-modal:hover {
-    background: rgba(0, 0, 0, 0.8);
-    transform: scale(1.1);
-}
 
 /* Walrus Animation */
 .walrus {
@@ -541,19 +304,19 @@ body.index-page {
     clip-path: inset(0 0 0 0);
 }
 
-/* Walrus Positions */
+/* Walrus Positions - Base positioning only */
 .bottom-left { bottom: -20%; left: 0; }
-.bottom-center { bottom: -20%; left: 50%; transform: translateX(-50%); }
+.bottom-center { bottom: -20%; left: 50%; }
 .bottom-right { bottom: -20%; right: 0; }
 .top-left { top: -20%; left: 0; }
-.top-center { top: -20%; left: 50%; transform: translateX(-50%); }
+.top-center { top: -20%; left: 50%; }
 .top-right { top: -20%; right: 0; }
 
-/* Walrus Animations */
-.walrus.appear { transform: translateY(0); }
-.walrus.hide { transform: translateY(100vh); }
 
-/* Walrus Rotations */
+
+/* Walrus Transform Combinations - Organized by state and position */
+
+/* Base rotation transforms */
 .walrus[data-angle="45"] { transform: rotate(45deg); }
 .walrus[data-angle="0"] { transform: rotate(0deg); }
 .walrus[data-angle="-45"] { transform: rotate(-45deg); }
@@ -561,17 +324,32 @@ body.index-page {
 .walrus[data-angle="180"] { transform: rotate(180deg); }
 .walrus[data-angle="-135"] { transform: rotate(-135deg); }
 
-/* Special transform combinations for centered walruses */
+/* Centered walrus positioning */
 .bottom-center[data-angle="0"] { transform: translateX(-50%) rotate(0deg); }
-.top-center[data-angle="180"] { transform: translateX(-50%) rotate(180deg); }
+.bottom-center[data-angle="45"] { transform: translateX(-50%) rotate(45deg); }
+.bottom-center[data-angle="-45"] { transform: translateX(-50%) rotate(-45deg); }
+.bottom-center[data-angle="135"] { transform: translateX(-50%) rotate(135deg); }
+.bottom-center[data-angle="180"] { transform: translateX(-50%) rotate(180deg); }
+.bottom-center[data-angle="-135"] { transform: translateX(-50%) rotate(-135deg); }
 
-/* Animation states with proper transform combinations */
-.walrus.appear[data-angle="45"] { transform: rotate(45deg); }
-.walrus.appear[data-angle="0"] { transform: rotate(0deg); }
-.walrus.appear[data-angle="-45"] { transform: rotate(-45deg); }
-.walrus.appear[data-angle="135"] { transform: rotate(135deg); }
-.walrus.appear[data-angle="180"] { transform: rotate(180deg); }
-.walrus.appear[data-angle="-135"] { transform: rotate(-135deg); }
+.top-center[data-angle="0"] { transform: translateX(-50%) rotate(0deg); }
+.top-center[data-angle="45"] { transform: translateX(-50%) rotate(45deg); }
+.top-center[data-angle="-45"] { transform: translateX(-50%) rotate(-45deg); }
+.top-center[data-angle="135"] { transform: translateX(-50%) rotate(135deg); }
+.top-center[data-angle="180"] { transform: translateX(-50%) rotate(180deg); }
+.top-center[data-angle="-135"] { transform: translateX(-50%) rotate(-135deg); }
+
+/* Animation states */
+.walrus.appear { transform: translateY(0); }
+.walrus.hide { transform: translateY(100vh); }
+
+/* Animation states with rotations */
+.walrus.appear[data-angle="45"] { transform: rotate(45deg) translateY(0); }
+.walrus.appear[data-angle="0"] { transform: rotate(0deg) translateY(0); }
+.walrus.appear[data-angle="-45"] { transform: rotate(-45deg) translateY(0); }
+.walrus.appear[data-angle="135"] { transform: rotate(135deg) translateY(0); }
+.walrus.appear[data-angle="180"] { transform: rotate(180deg) translateY(0); }
+.walrus.appear[data-angle="-135"] { transform: rotate(-135deg) translateY(0); }
 
 .walrus.hide[data-angle="45"] { transform: rotate(45deg) translateY(100vh); }
 .walrus.hide[data-angle="0"] { transform: rotate(0deg) translateY(100vh); }
@@ -580,10 +358,35 @@ body.index-page {
 .walrus.hide[data-angle="180"] { transform: rotate(180deg) translateY(100vh); }
 .walrus.hide[data-angle="-135"] { transform: rotate(-135deg) translateY(100vh); }
 
-.bottom-center.appear[data-angle="0"] { transform: translateX(-50%) rotate(0deg); }
-.top-center.appear[data-angle="180"] { transform: translateX(-50%) rotate(180deg); }
+/* Centered walrus animation states */
+.bottom-center.appear[data-angle="0"] { transform: translateX(-50%) rotate(0deg) translateY(0); }
+.bottom-center.appear[data-angle="45"] { transform: translateX(-50%) rotate(45deg) translateY(0); }
+.bottom-center.appear[data-angle="-45"] { transform: translateX(-50%) rotate(-45deg) translateY(0); }
+.bottom-center.appear[data-angle="135"] { transform: translateX(-50%) rotate(135deg) translateY(0); }
+.bottom-center.appear[data-angle="180"] { transform: translateX(-50%) rotate(180deg) translateY(0); }
+.bottom-center.appear[data-angle="-135"] { transform: translateX(-50%) rotate(-135deg) translateY(0); }
+
 .bottom-center.hide[data-angle="0"] { transform: translateX(-50%) rotate(0deg) translateY(100vh); }
+.bottom-center.hide[data-angle="45"] { transform: translateX(-50%) rotate(45deg) translateY(100vh); }
+.bottom-center.hide[data-angle="-45"] { transform: translateX(-50%) rotate(-45deg) translateY(100vh); }
+.bottom-center.hide[data-angle="135"] { transform: translateX(-50%) rotate(135deg) translateY(100vh); }
+.bottom-center.hide[data-angle="180"] { transform: translateX(-50%) rotate(180deg) translateY(100vh); }
+.bottom-center.hide[data-angle="-135"] { transform: translateX(-50%) rotate(-135deg) translateY(100vh); }
+
+.top-center.appear[data-angle="0"] { transform: translateX(-50%) rotate(0deg) translateY(0); }
+.top-center.appear[data-angle="45"] { transform: translateX(-50%) rotate(45deg) translateY(0); }
+.top-center.appear[data-angle="-45"] { transform: translateX(-50%) rotate(-45deg) translateY(0); }
+.top-center.appear[data-angle="135"] { transform: translateX(-50%) rotate(135deg) translateY(0); }
+.top-center.appear[data-angle="180"] { transform: translateX(-50%) rotate(180deg) translateY(0); }
+.top-center.appear[data-angle="-135"] { transform: translateX(-50%) rotate(-135deg) translateY(0); }
+
+.top-center.hide[data-angle="0"] { transform: translateX(-50%) rotate(0deg) translateY(100vh); }
+.top-center.hide[data-angle="45"] { transform: translateX(-50%) rotate(45deg) translateY(100vh); }
+.top-center.hide[data-angle="-45"] { transform: translateX(-50%) rotate(-45deg) translateY(100vh); }
+.top-center.hide[data-angle="135"] { transform: translateX(-50%) rotate(135deg) translateY(100vh); }
 .top-center.hide[data-angle="180"] { transform: translateX(-50%) rotate(180deg) translateY(100vh); }
+.top-center.hide[data-angle="-135"] { transform: translateX(-50%) rotate(-135deg) translateY(100vh); }
+
 
 /* Animations */
 @keyframes fadeIn {
@@ -598,7 +401,8 @@ body.index-page {
 
 /* Responsive Design */
 @media (max-width: 1200px) {
-    .book { width: 90vw; height: 70vh; }
+    .book { width: 80vw; height: 60vh; }
+    .title-image { max-width: 500px; }
 }
 
 @media (max-width: 768px) {
@@ -610,13 +414,339 @@ body.index-page {
     .about-content h1 { font-size: 2em; }
     .about-content h2 { font-size: 1.5em; }
     .about-text p, .about-text ul { font-size: 1em; }
-    .book { width: 95vw; height: 60vh; }
     .page-content { padding: 15px; }
     .comic-image { width: 250px; height: 250px; }
     .choice-container h3 { font-size: 1.4em; margin-bottom: 20px; }
-    .choice-btn { padding: 12px 25px; font-size: 1em; }
     .ending-text h3 { font-size: 2em; }
     .ending-text p { font-size: 1.1em; }
     .restart-btn { padding: 12px 25px; font-size: 1em; }
     .navigation { gap: 15px; padding: 12px 20px; }
+    .title-image { max-width: 400px; }
+    .comic-container { gap: 20px;  }
+    .book { width: 90vw; height: 50vh; }
+}
+
+
+/* Comic Book Container */
+.comic-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 150px); /* Account for smaller navigation bar height */
+    gap: 20px; /* Space between title and book */
+    padding-top: 30px; /* Add padding between nav bar and comic content */
+}
+
+/* Comic Title */
+.comic-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title-image {
+    max-width: 1200px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+
+/* Main book container styling */
+.book {
+    position: relative;
+    width: 500px;
+    height: 700px;
+    transition: transform 0.5s;
+}
+
+/* Individual page/paper styling */
+.paper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    perspective: 1500px;
+}
+
+/* Front side of each page */
+.front,
+.back {
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform-origin: left;
+    transition: transform 0.5s;
+    box-shadow: 
+        0 0 20px rgba(0,0,0,0.1),
+        0 0 40px rgba(0,0,0,0.05),
+        inset 0 0 20px rgba(0,0,0,0.02);
+}
+
+.front {
+    z-index: 1;
+    backface-visibility: hidden;
+    border-left: 3px solid #d4c4a8;
+    box-shadow: 
+        0 0 20px rgba(0,0,0,0.1),
+        0 0 40px rgba(0,0,0,0.05),
+        inset 0 0 20px rgba(0,0,0,0.02),
+        2px 0 10px rgba(0,0,0,0.1);
+}
+
+/* Ensure final page front content is accessible */
+#p7 .front {
+    z-index: 1000; /* Higher z-index for final page */
+}
+
+/* Ensure restart button is always clickable */
+.restart-btn {
+    z-index: 3000 !important; /* Highest priority for restart button */
+    position: relative;
+    pointer-events: auto;
+}
+
+/* Ensure the final page front content container has proper z-index */
+#p7 .front-content {
+    z-index: 1001;
+    position: relative;
+}
+
+/* Back side of each page */
+.back {
+    z-index: 0;
+    box-shadow: 
+        0 0 20px rgba(0,0,0,0.1),
+        0 0 40px rgba(0,0,0,0.05),
+        inset 0 0 20px rgba(0,0,0,0.02),
+        -2px 0 10px rgba(0,0,0,0.1);
+}
+
+/* Content container for front side */
+.front-content,
+.back-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+/* Content container for back side */
+.back-content {
+    transform: rotateY(180deg);
+}
+
+/* Image styling */
+img {
+    max-width: calc(100% - 40px);
+    max-height: calc(100% - 40px);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 10px auto;
+    border-radius: 5px;
+}
+
+/* Text styling for page content */
+.front-content h1,
+.back-content h1 {
+    margin: 10px 0;
+    font-size: 1.5em;
+    text-align: center;
+    color: #333;
+}
+
+.front-content h2 {
+    margin: 20px 0;
+    font-size: 1.3em;
+    text-align: center;
+    color: #333;
+}
+
+/* Caption styling */
+.caption {
+    margin: 15px 0;
+    font-size: 1.1em;
+    text-align: center;
+    color: var(--primary-color);
+    font-weight: 600;
+    line-height: 1.4;
+    padding: 10px;
+    background: rgba(255,255,255,0.8);
+    border-radius: 8px;
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Z-index organization - Clear hierarchy */
+/* Base elements: 1-99 */
+/* Navigation: 100-999 */
+/* Interactive elements: 1000-1999 */
+/* Modals and overlays: 2000+ */
+
+/* Paper stack order - Comic pages */
+#p1 { z-index: 7; }
+#p2 { z-index: 6; }
+#p3 { z-index: 5; }
+#p4 { z-index: 4; }
+#p5 { z-index: 3; }
+#p6 { z-index: 2; }
+#p7 { z-index: 1; }
+
+
+/* Controller Buttons */
+#prev-btn, #next-btn {
+    border: none;
+    background: linear-gradient(145deg, var(--accent-color), #b8a082);
+    color: var(--primary-color);
+    cursor: pointer;
+    margin: 10px;
+    transition: var(--transition);
+    position: fixed;
+    bottom: 10px;
+    z-index: 1000;
+    font-size: 40px;
+    font-weight: bold;
+    outline: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border: 3px solid var(--primary-color);
+}
+
+#prev-btn {
+    left: calc(50% - 100px);
+}
+
+#next-btn {
+    right: calc(50% - 100px);
+}
+
+#prev-btn:hover:not(:disabled), #next-btn:hover:not(:disabled) {
+    background: linear-gradient(145deg, #c4b498, #a8966e);
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    color: var(--secondary-color);
+}
+
+#prev-btn:disabled, #next-btn:disabled {
+    background: linear-gradient(145deg, #e0d5c7, #d4c4a8);
+    color: #999;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-color: #ccc;
+    opacity: 0.6;
+}
+
+#prev-btn:active:not(:disabled), #next-btn:active:not(:disabled) {
+    transform: translateY(-1px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+/* Choice buttons styling */
+.choice-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.choice-btn {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin: 0;
+    position: static;
+}
+
+.choice-btn:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+.choice-btn:active {
+    transform: translateY(0);
+}
+
+
+/* Paper flip effect */
+.flipped .front,
+.flipped .back {
+    transform: rotateY(-180deg);
+}
+
+/* Final Page Content Styling */
+.final-page-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    padding: 40px;
+    position: relative;
+    z-index: 1002;
+}
+
+.final-page-content h1 {
+    color: var(--primary-color);
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.final-page-content p {
+    color: var(--secondary-color);
+    font-size: 1.3em;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.restart-btn {
+    background: linear-gradient(145deg, var(--accent-color), #b8a082);
+    color: var(--primary-color);
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: 600;
+    transition: var(--transition);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    position: relative;
+    z-index: 3000 !important; /* Highest z-index to ensure it's clickable */
+    pointer-events: auto; /* Ensure button can receive clicks */
+    display: inline-block; /* Ensure proper display */
+}
+
+.restart-btn:hover {
+    background: linear-gradient(145deg, #c4b498, #a8966e);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+.restart-btn:active {
+    transform: translateY(-1px);
 }

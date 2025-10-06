@@ -21,257 +21,138 @@
             </a>
         </div>
     </nav>
-    
-    <div class="book-container">
+
+
+    <!-- Previous Button -->
+    <button id="prev-btn">
+        ←
+    </button>
+
+
+    <!-- Comic Container -->
+    <div class="comic-container">
+        <!-- Comic Title -->
         <div class="comic-title">
-            <img src="img/comic_title.png" alt="Where's Wally the Walrus">
-        </div>
-        <div class="book">
-            <!-- Main Story Pages 1-5 -->
-            <div class="page-spread spread-1" data-page="1">
-                <div class="page left-page">
-                    <div class="page-content">
-                        <img src="img/1.png" alt="Page 1" class="comic-image">
-                        <div class="page-text">
-                            <p>Wally is asked to go to the store for nuts.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="page right-page">
-                    <div class="page-content">
-                        <img src="img/2.png" alt="Page 2" class="comic-image">
-                        <div class="page-text">
-                            <p>He walks happily toward the grocery store.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="page-spread spread-2" data-page="2">
-                <div class="page left-page">
-                    <div class="page-content">
-                        <img src="img/3.png" alt="Page 3" class="comic-image">
-                        <div class="page-text">
-                            <p>Wally stops to look at the shelves for the nuts.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="page right-page">
-                    <div class="page-content">
-                        <img src="img/4.png" alt="Page 4" class="comic-image">
-                        <div class="page-text">
-                            <p>He finds a strange, mysterious note on the shelf.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="page-spread spread-3" data-page="3">
-                <div class="page left-page">
-                    <div class="page-content">
-                        <img src="img/5.png" alt="Page 5" class="comic-image">
-                        <div class="page-text">
-                            <p>The secret note gives him a mysterious location to visit.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="page right-page">
-                    <div class="page-content">
-                        <div class="choice-container">
-                            <h3>Choose Your Path: <br>Are you a going to take Wally to the mysytery location?</h3>
-                            <div class="choice-buttons">
-                                <button class="choice-btn" data-path="a1">Yes</button>
-                                <button class="choice-btn" data-path="b1">No</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Branch A: 5a1 -> 5a2 -> (5a2a or 5a2b) -->
-            <div class="page-spread spread-a1" data-page="a1" data-branch="a">
-                <div class="page left-page">
-                    <div class="page-content">
-                        <img src="img/5a1.png" alt="Page 5a1" class="comic-image">
-                        <div class="page-text">
-                            <p>Wally finds a sunken ship at the mysterious location.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="page right-page">
-                    <div class="page-content">
-                        <img src="img/5a2.png" alt="Page 5a2" class="comic-image">
-                        <div class="page-text">
-                            <p>A scary shark starts chasing Wally through the water!</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="page-spread spread-a2" data-page="a2" data-branch="a">
-                <div class="page left-page">
-                    <div class="page-content">
-                        <img src="img/5a3.png" alt="Page 5a3" class="comic-image">
-                        <div class="page-text">
-                            <p>Wally finds a broken porthole to escape the shipwreck.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="page right-page">
-                    <div class="page-content">
-                        <div class="choice-container">
-                            <h3>Your final choice: <br>Are you going to risk Wally escaping?</h3>
-                            <div class="choice-buttons">
-                                <button class="choice-btn" data-path="a3a">Yes</button>
-                                <button class="choice-btn" data-path="a3b">No</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="page-spread spread-a3a" data-page="a3a" data-branch="a">
-                <div class="page left-page">
-                    <div class="page-content">
-                        <img src="img/5a3a.png" alt="Page 5a3a" class="comic-image">
-                        <div class="page-text">
-                            <p>Wally runs away from the sunken ship and gets home safely.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="page right-page">
-                    <div class="page-content">
-                        <div class="ending-text">
-                            <h3>The End</h3>
-                            <p>You've reached the end of this path!</p>
-                            <button class="restart-btn">Start Over</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="page-spread spread-a3b" data-page="a3b" data-branch="a">
-                <div class="page left-page">
-                    <div class="page-content">
-                        <img src="img/5a3b.png" alt="Page 5a3b" class="comic-image">
-                        <div class="page-text">
-                            <p>Wally couldn't escape in time and gets eaten by the shark.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="page right-page">
-                    <div class="page-content">
-                        <div class="ending-text">
-                            <h3>The End</h3>
-                            <p>You've reached the end of this path!</p>
-                            <button class="restart-btn">Start Over</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Branch B: 5b1 -> 5b2 -> 5b3 -> (5b3a or 5b3b) -->
-            <div class="page-spread spread-b1" data-page="b1" data-branch="b">
-                <div class="page left-page">
-                    <div class="page-content">
-                        <img src="img/5b1.png" alt="Page 5b1" class="comic-image">
-                        <div class="page-text">
-                            <p>Wally decides to ignore the note and go to the park instead.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="page right-page">
-                    <div class="page-content">
-                        <img src="img/5b2.png" alt="Page 5b2" class="comic-image">
-                        <div class="page-text">
-                            <p>He waves hello to his friend Sally at the playground.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="page-spread spread-b2" data-page="b2" data-branch="b">
-                <div class="page left-page">
-                    <div class="page-content">
-                        <img src="img/5b3.png" alt="Page 5b3" class="comic-image">
-                        <div class="page-text">
-                            <p>Sally invites Wally to her home.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="page right-page">
-                    <div class="page-content">
-                        <div class="choice-container">
-                            <h3>Your final choice: <br>Are you going to have Wally listen to Sally?</h3>
-                            <div class="choice-buttons">
-                                <button class="choice-btn" data-path="b3a">Yes</button>
-                                <button class="choice-btn" data-path="b3b">No</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="page-spread spread-b3a" data-page="b3a" data-branch="b">
-                <div class="page left-page">
-                    <div class="page-content">
-                        <img src="img/5b3a.png" alt="Page 5b3a" class="comic-image">
-                        <div class="page-text">
-                            <p>Wally arrives to find a surprise birthday party waiting for him!</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="page right-page">
-                    <div class="page-content">
-                        <div class="ending-text">
-                            <h3>The End</h3>
-                            <p>You've reached the end of this path!</p>
-                            <button class="restart-btn">Start Over</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="page-spread spread-b3b" data-page="b3b" data-branch="b">
-                <div class="page left-page">
-                    <div class="page-content">
-                        <img src="img/5b3b.png" alt="Page 5b3b" class="comic-image">
-                        <div class="page-text">
-                            <p>Wally declines Sally and decides to go home instead.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="page right-page">
-                    <div class="page-content">
-                        <div class="ending-text">
-                            <h3>The End</h3>
-                            <p>You've reached the end of this path!</p>
-                            <button class="restart-btn">Start Over</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <img src="img/comic_title.png" alt="Comic Title" class="title-image">
         </div>
         
-        <!-- Navigation Controls -->
-        <div class="navigation">
-            <button id="prevBtn" class="nav-btn">←</button>
-            <button id="nextBtn" class="nav-btn">→</button>
+        <!-- Book -->
+        <div id="book" class="book">
+        <!-- Paper 1 -->
+        <div id="p1" class="paper">
+            <div class="front">
+                <div id="f1" class="front-content">
+                    <h1>Front 1</h1>
+                </div>
+            </div>
+            <div class="back">
+                <div id="b1" class="back-content">
+                    <img src="img/1.png" alt="Page 1">
+                    <p class="caption">Wally is asked to go to the store for nuts.</p>
+                </div>
+            </div>
         </div>
-        
-        <!-- Back to Home Button -->
-        <div class="home-btn">
-            <button onclick="window.location.href='index.html'">← Back to Home</button>
+        <!-- Paper 2 -->
+        <div id="p2" class="paper">
+            <div class="front">
+                <div id="f2" class="front-content">
+                    <img src="img/2.png" alt="Page 2">
+                    <p class="caption">He walks happily toward the grocery store.</p>
+                </div>
+            </div>
+            <div class="back">
+                <div id="b2" class="back-content">
+                    <img src="img/3.png" alt="Page 3">
+                    <p class="caption">Wally stops to look at the shelves for the nuts.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Paper 3 -->
+        <div id="p3" class="paper">
+            <div class="front">
+                <div id="f3" class="front-content">
+                    <img src="img/4.png" alt="Page 4">
+                    <p class="caption">He finds a strange, mysterious note on the shelf.</p>
+                </div>
+            </div>
+            <div class="back">
+                <div id="b3" class="back-content">
+                    <img src="img/5.png" alt="Page 5">
+                    <p class="caption">The secret note gives him a mysterious location to visit.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Paper 4 -->
+        <div id="p4" class="paper">
+            <div class="front">
+                <div id="f4" class="front-content">
+                    <h2>Should Wally follow the mysterious note?</h2>
+                    <div class="choice-buttons">
+                        <button class="choice-btn" data-choice="yes">Yes</button>
+                        <button class="choice-btn" data-choice="no">No</button>
+                    </div>
+                </div>
+            </div>
+            <div class="back">
+                <div id="b4" class="back-content">
+                    <img id="choice-image-1" src="" alt="Choice Result">
+                </div>
+            </div>
+        </div>
+        <!-- Paper 5 -->
+        <div id="p5" class="paper">
+            <div class="front">
+                <div id="f5" class="front-content">
+                    <img id="choice-image-2" src="" alt="Choice Result">
+                </div>
+            </div>
+            <div class="back">
+                <div id="b5" class="back-content">
+                    <img id="choice-image-3" src="" alt="Choice Result">
+                </div>
+            </div>
+        </div>
+        <!-- Paper 6 -->
+        <div id="p6" class="paper">
+            <div class="front">
+                <div id="f6" class="front-content">
+                    <h2>What should Wally do next?</h2>
+                    <div class="choice-buttons">
+                        <button id="yes-btn" class="choice-btn" data-choice="yes">Yes</button>
+                        <button id="no-btn" class="choice-btn" data-choice="no">No</button>
+                    </div>
+                </div>
+            </div>
+            <div class="back">
+                <div id="b6" class="back-content">
+                    <img id="back6-image" src="" alt="Ending">
+                </div>
+            </div>
+        </div>
+        <!-- Paper 7 - Final Page -->
+        <div id="p7" class="paper">
+            <div class="front">
+                <div id="f7" class="front-content">
+                    <h1>End of Story</h1>
+                    <p>Thank you for reading Wally's adventure!</p>
+                    <button class="restart-btn">Start from the Beginning</button>
+                </div>
+            </div>
+            <div class="back">
+                <div id="b7" class="back-content">
+                    <h1>The End</h1>
+                    <p>Thank you for reading Wally's adventure!</p>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- Next Button -->
+    <button id="next-btn">
+        →
+    </button>
     
-    <!-- Image Modal -->
-    <div id="imageModal" class="image-modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <img id="modalImage" class="modal-image" src="" alt="Enlarged comic image">
-        </div>
-    </div>
+
     
     <!-- Audio Elements -->
     <audio id="pageSound" preload="auto">
