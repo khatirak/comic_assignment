@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Comic Configuration for the newer system (not currently used)
+// Comic Configuration
 const COMIC_CONFIG = {
     storyFlow: {
         '1': { next: '2', prev: null },
@@ -35,9 +35,123 @@ const COMIC_CONFIG = {
 };
 
 function initInteractiveComic() {
-    // This function is for the newer comic system but not currently used
-    // The actual comic uses the book-flipping system below
-    console.log('Interactive comic system not active - using book-flipping system');
+    const spreads = document.querySelectorAll('.page-spread');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    
+    let currentPage = '1';
+    let isAnimating = false;
+    
+    // Initialize comic
+    showPage('1');
+    updateNavigationButtons();
+    
+    // Event listeners
+    prevBtn.addEventListener('click', () => navigate('prev'));
+    nextBtn.addEventListener('click', () => navigate('next'));
+    
+    document.addEventListener('keydown', handleKeyboard);
+    document.addEventListener('click', handleClick);
+    
+    function navigate(direction) {
+        if (isAnimating) return;
+        
+        const targetPage = direction === 'prev' 
+            ? COMIC_CONFIG.storyFlow[currentPage].prev
+            : COMIC_CONFIG.storyFlow[currentPage].next;
+            
+        if (targetPage) {
+            playPageSound();
+            navigateToPage(targetPage);
+        }
+    }
+    
+    function handleKeyboard(e) {
+        if (isAnimating) return;
+        
+        if (e.key === 'ArrowLeft') {
+            navigate('prev');
+        } else if (e.key === 'ArrowRight') {
+            navigate('next');
+        }
+    }
+    
+    function handleClick(e) {
+        if (e.target.classList.contains('choice-btn')) {
+            const choice = e.target.getAttribute('data-path');
+            if (choice && !isAnimating) {
+                playPageSound();
+                navigateToPage(choice);
+            }
+        }
+        
+        if (e.target.classList.contains('restart-btn')) {
+            stopAllAudio();
+            navigateToPage('1');
+        }
+        
+        if (e.target.classList.contains('comic-image')) {
+            openImageModal(e.target.src, e.target.alt);
+        }
+    }
+    
+    function navigateToPage(pageId) {
+        if (isAnimating || pageId === currentPage) return;
+        
+        stopAllAudioExceptPage();
+        isAnimating = true;
+        
+        const currentSpread = document.querySelector(`[data-page="${currentPage}"]`);
+        const targetSpread = document.querySelector(`[data-page="${pageId}"]`);
+        
+        if (currentSpread && targetSpread) {
+            const rightPage = currentSpread.querySelector('.right-page');
+            if (rightPage) rightPage.classList.add('flipping');
+            
+            setTimeout(() => {
+                currentPage = pageId;
+                showPage(currentPage);
+                updateNavigationButtons();
+                
+                if (rightPage) rightPage.classList.remove('flipping');
+                isAnimating = false;
+            }, 800);
+        } else {
+            isAnimating = false;
+        }
+    }
+    
+    function showPage(pageId) {
+        // Hide all spreads
+        spreads.forEach(spread => {
+            spread.classList.remove('active');
+            const rightPage = spread.querySelector('.right-page');
+            if (rightPage) rightPage.classList.remove('flipping');
+        });
+        
+        // Show target spread
+        const targetSpread = document.querySelector(`[data-page="${pageId}"]`);
+        if (targetSpread) targetSpread.classList.add('active');
+        
+        // Play appropriate sound
+        if (COMIC_CONFIG.storyFlow[pageId]?.ending) {
+            playSpecificEndingSound(pageId);
+        } else if (Math.random() < 0.3) {
+            playPageSound();
+        }
+    }
+    
+    function updateNavigationButtons() {
+        const hasPrev = COMIC_CONFIG.storyFlow[currentPage].prev !== null;
+        const hasNext = COMIC_CONFIG.storyFlow[currentPage].next !== null;
+        const isEnding = COMIC_CONFIG.storyFlow[currentPage].ending === true;
+        
+        prevBtn.disabled = !hasPrev;
+        nextBtn.disabled = !hasNext;
+        
+        const navigation = document.querySelector('.navigation');
+        navigation.style.display = isEnding ? 'none' : 'flex';
+    }
 }
 
 function initWalrusAnimation() {
@@ -213,7 +327,7 @@ const paper3 = document.querySelector("#p3");
 const paper4 = document.querySelector("#p4");
 const paper5 = document.querySelector("#p5");
 const paper6 = document.querySelector("#p6");
-const paper7 = document.querySelector("#p7");
+// Removed paper7 reference since it doesn't exist in HTML
 
 // Choice-related elements
 const choiceImage1 = document.querySelector("#choice-image-1");
@@ -237,7 +351,7 @@ function updateNavigationButtons() {
     } else if (currentLocation === 6) {
         // On Front 6 (second choice page), disable next until choice is made
         nextBtn.disabled = secondChoice === null;
-    } else if (currentLocation >= 7) {
+    } else if (currentLocation >= 8) {
         // On final page, disable next button
         nextBtn.disabled = true;
     } else {
@@ -251,28 +365,16 @@ document.addEventListener('click', function(e) {
     console.log('Click detected on:', e.target);
     console.log('Current location:', currentLocation);
     console.log('Has choice-btn class:', e.target.classList.contains('choice-btn'));
-    console.log('Has restart-btn class:', e.target.classList.contains('restart-btn'));
     
-    // Handle restart button clicks first - check both direct clicks and clicks within the button
-    if (e.target.classList.contains('restart-btn') || e.target.closest('.restart-btn')) {
-        e.preventDefault();
-        e.stopPropagation();
-        console.log('Restart button clicked');
-        restartComic();
-        return;
-    }
-    
-    // Handle choice button clicks
     if (e.target.classList.contains('choice-btn')) {
         const choice = e.target.getAttribute('data-choice');
         console.log('Choice button clicked:', choice);
         
         // Handle choice for all pages (including Front 6)
         handleChoice(choice);
-        return;
     }
     
-    // Only handle Front 6 z-index workaround when we're actually at location 6
+    // Also check if we're at location 6 and clicked on paper5 or paper6 (z-index workaround)
     if (currentLocation === 6 && (e.target.id === 'p5' || e.target.id === 'p6' || e.target.closest('#p5') || e.target.closest('#p6'))) {
         console.log('Front 6 area clicked (z-index workaround)');
         // Determine choice based on click position
@@ -282,19 +384,6 @@ document.addEventListener('click', function(e) {
         console.log('Detected choice:', choice);
         handleChoice(choice);
         return;
-    }
-    
-    // Log when clicks are not handled
-    if (currentLocation >= 7) {
-        console.log('Click on final page - no action needed');
-        // Additional check for restart button on final page
-        if (e.target.closest('#f7') && e.target.closest('.restart-btn')) {
-            console.log('Restart button detected via closest method');
-            e.preventDefault();
-            e.stopPropagation();
-            restartComic();
-            return;
-        }
     }
 });
 
@@ -308,14 +397,6 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Front 6 buttons not found');
     }
     
-    // Check if restart button exists (event listener is handled in main click handler)
-    const restartBtn = document.querySelector('.restart-btn');
-    if (restartBtn) {
-        console.log('Restart button found');
-    } else {
-        console.log('Restart button not found');
-    }
-    
     // Initialize the book to show Back 1 and Front 2
     openBook();
     paper1.classList.add("flipped");
@@ -327,8 +408,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Business Logic
 let currentLocation = 2; // Start at location 2 (Back 1 + Front 2)
-let numOfPapers = 7;
-let maxLocation = numOfPapers + 1; // Allow for final page (location 8)
+let numOfPapers = 6;
+let maxLocation = numOfPapers + 2; // Allow for final page (location 8)
 let firstChoice = null; // Track first choice from Front 4 (yes/no)
 let secondChoice = null; // Track second choice from Front 6 (yes/no)
 
@@ -347,12 +428,6 @@ function closeBook(isAtBeginning) {
 // Arrow positioning is now handled by CSS
 
 function handleChoice(choice) {
-    // Only handle choices when we're on the appropriate pages
-    if (currentLocation !== 4 && currentLocation !== 6) {
-        console.log('Choice made but not on a choice page, ignoring');
-        return;
-    }
-    
     // Play page sound when choice is made
     playPageSound();
     
@@ -472,24 +547,20 @@ function goNextPage() {
                 paper6.classList.add('flipped');
                 paper6.style.zIndex = 6;
                 break;
-            case 7:
-                paper7.classList.add('flipped');
-                paper7.style.zIndex = 7;
-                break;
-            case 8:
-                // Final page - unflip Paper 7 to show the front with restart button
-                paper7.classList.remove('flipped');
-                paper7.style.zIndex = 8;
-                break;
             default:
                 throw new Error("unkown state");
         }
         currentLocation++;
         console.log('Current location:', currentLocation);
         
-        // Play ending sound when reaching the final page (location 8)
-        if (currentLocation === 8) {
+        // Play ending sound when reaching the final page (location 7)
+        if (currentLocation === 7) {
             playEndingSoundBasedOnChoices();
+        }
+        
+        // Show final page after ending
+        if (currentLocation === 8) {
+            showFinalPage();
         }
         
         // Update navigation button states
@@ -529,8 +600,7 @@ function goPrevPage() {
                 paper6.style.zIndex = 2;
                 break;
             case 8:
-                paper7.classList.remove("flipped");
-                paper7.style.zIndex = 1;
+                closeBook(false);
                 break;
             default:
                 throw new Error("unkown state");
@@ -543,13 +613,54 @@ function goPrevPage() {
     }
 }
 
+function showFinalPage() {
+    const finalPage = document.getElementById('final-page');
+    if (finalPage) {
+        finalPage.style.display = 'flex';
+        // Hide navigation buttons
+        document.getElementById('prev-btn').style.display = 'none';
+        document.getElementById('next-btn').style.display = 'none';
+    }
+}
 
 function restartComic() {
-    console.log('Restarting comic by reloading page...');
-    
-    // Stop all audio before reloading
+    // Stop all audio
     stopAllAudio();
     
-    // Reload the page to start from the beginning
-    window.location.reload();
+    // Reset all variables
+    currentLocation = 2;
+    firstChoice = null;
+    secondChoice = null;
+    
+    // Reset all papers
+    const papers = [paper1, paper2, paper3, paper4, paper5, paper6];
+    papers.forEach(paper => {
+        paper.classList.remove("flipped");
+    });
+    
+    // Reset z-indexes
+    paper1.style.zIndex = 7;
+    paper2.style.zIndex = 6;
+    paper3.style.zIndex = 5;
+    paper4.style.zIndex = 4;
+    paper5.style.zIndex = 3;
+    paper6.style.zIndex = 2;
+    
+    // Reset book position
+    closeBook(true);
+    
+    // Hide final page
+    const finalPage = document.getElementById('final-page');
+    if (finalPage) {
+        finalPage.style.display = 'none';
+    }
+    
+    // Show navigation buttons
+    document.getElementById('prev-btn').style.display = 'flex';
+    document.getElementById('next-btn').style.display = 'flex';
+    
+    // Update navigation buttons
+    updateNavigationButtons();
+    
+    console.log('Comic restarted');
 }

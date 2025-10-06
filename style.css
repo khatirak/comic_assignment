@@ -118,7 +118,6 @@ body.index-page {
     padding: 40px;
     border-radius: 15px;
     text-align: center;
-    position: relative; /* Ensure z-index applies so Start button stays above walrus */
     z-index: 10;
     display: flex;
     flex-direction: column;
@@ -502,26 +501,6 @@ body.index-page {
         2px 0 10px rgba(0,0,0,0.1);
 }
 
-/* Ensure final page front content is accessible */
-#p7 .front {
-    z-index: 1000; /* Higher z-index for final page */
-}
-
-/* Ensure restart button is always clickable */
-.restart-btn {
-    z-index: 9999 !important; /* Highest priority for restart button */
-    position: relative;
-    pointer-events: auto;
-    cursor: pointer;
-    isolation: isolate; /* Create new stacking context */
-}
-
-/* Ensure the final page front content container has proper z-index */
-#p7 .front-content {
-    z-index: 1001;
-    position: relative;
-}
-
 /* Back side of each page */
 .back {
     z-index: 0;
@@ -591,15 +570,20 @@ img {
     border: 2px solid var(--accent-color);
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
+
+/* Z-index organization - Clear hierarchy */
+/* Base elements: 1-99 */
+/* Navigation: 100-999 */
+/* Interactive elements: 1000-1999 */
+/* Modals and overlays: 2000+ */
+
 /* Paper stack order - Comic pages */
-#p1 { z-index: 8; }
-#p2 { z-index: 7; }
-#p3 { z-index: 6; }
-#p4 { z-index: 5; }
-#p5 { z-index: 4; }
-#p6 { z-index: 3; }
-#p7 { z-index: 2; }
-#p8 { z-index: 1; }
+#p1 { z-index: 7; }
+#p2 { z-index: 6; }
+#p3 { z-index: 5; }
+#p4 { z-index: 4; }
+#p5 { z-index: 3; }
+#p6 { z-index: 2; }
 
 
 /* Controller Buttons */
@@ -693,22 +677,34 @@ img {
     transform: rotateY(-180deg);
 }
 
-/* Final Page Content Styling */
-.final-page-content {
-    display: flex;
-    flex-direction: column;
+/* Final Page Styling */
+.final-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.8);
+    display: none;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    z-index: 2000;
+}
+
+.final-page-content {
+    background: linear-gradient(145deg, var(--background-color), #f5f0e8);
+    padding: 60px 40px;
+    border-radius: 20px;
     text-align: center;
-    padding: 40px;
-    position: relative;
-    z-index: 1002;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    border: 4px solid var(--primary-color);
+    max-width: 500px;
+    width: 90%;
 }
 
 .final-page-content h1 {
     color: var(--primary-color);
-    font-size: 2.5em;
+    font-size: 3em;
     margin-bottom: 20px;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
@@ -731,13 +727,7 @@ img {
     font-weight: 600;
     transition: var(--transition);
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    position: relative;
-    z-index: 9999 !important; /* Highest z-index to ensure it's clickable */
-    pointer-events: auto; /* Ensure button can receive clicks */
-    display: inline-block; /* Ensure proper display */
-    isolation: isolate; /* Create new stacking context */
-    transform: translateZ(0); /* Force hardware acceleration */
+    border: 3px solid var(--primary-color);
 }
 
 .restart-btn:hover {
