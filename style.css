@@ -739,3 +739,26 @@ img {
 .restart-btn:active {
     transform: translateY(-1px);
 }
+
+/* Restart Instructions */
+.restart-instructions {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(255,255,255,0.9);
+    color: var(--primary-color);
+    padding: 8px 15px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    border: 2px solid var(--accent-color);
+    z-index: 100;
+    transition: var(--transition);
+}
+
+.restart-instructions:hover {
+    background: rgba(255,255,255,1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}

@@ -73,6 +73,10 @@ function initInteractiveComic() {
             navigate('prev');
         } else if (e.key === 'ArrowRight') {
             navigate('next');
+        } else if (e.key.toLowerCase() === 'r') {
+            // Restart the comic when R is pressed
+            stopAllAudio();
+            navigateToPage('2');
         }
     }
     
@@ -338,6 +342,64 @@ const back6Image = document.querySelector("#back6-image");
 // Event Listener
 prevBtn.addEventListener("click", goPrevPage);
 nextBtn.addEventListener("click", goNextPage);
+
+// Global keyboard listener for arrow keys and R key
+document.addEventListener('keydown', function(e) {
+    // Handle arrow keys for navigation
+    if (e.key === 'ArrowLeft') {
+        // Check if previous button is disabled or hidden
+        if (!prevBtn.disabled && prevBtn.style.display !== 'none') {
+            goPrevPage();
+        }
+    } else if (e.key === 'ArrowRight') {
+        // Check if next button is disabled or hidden
+        if (!nextBtn.disabled && nextBtn.style.display !== 'none') {
+            goNextPage();
+        }
+    } else if (e.key.toLowerCase() === 'r') {
+        // Reset to location 2 (back1 + front2) instead of calling restartComic
+        currentLocation = 2;
+        firstChoice = null;
+        secondChoice = null;
+        
+        // Stop all audio
+        stopAllAudio();
+        
+        // Reset all papers
+        const papers = [paper1, paper2, paper3, paper4, paper5, paper6];
+        papers.forEach(paper => {
+            paper.classList.remove("flipped");
+        });
+        
+        // Reset z-indexes
+        paper1.style.zIndex = 7;
+        paper2.style.zIndex = 6;
+        paper3.style.zIndex = 5;
+        paper4.style.zIndex = 4;
+        paper5.style.zIndex = 3;
+        paper6.style.zIndex = 2;
+        
+        // Reset book position to show back1 + front2
+        openBook();
+        paper1.classList.add("flipped");
+        paper1.style.zIndex = 1;
+        
+        // Hide final page
+        const finalPage = document.getElementById('final-page');
+        if (finalPage) {
+            finalPage.style.display = 'none';
+        }
+        
+        // Show navigation buttons
+        document.getElementById('prev-btn').style.display = 'flex';
+        document.getElementById('next-btn').style.display = 'flex';
+        
+        // Update navigation buttons
+        updateNavigationButtons();
+        
+        console.log('Comic restarted to back1+front2');
+    }
+});
 
 // Function to update navigation button states
 function updateNavigationButtons() {
