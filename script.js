@@ -237,7 +237,7 @@ function updateNavigationButtons() {
     } else if (currentLocation === 6) {
         // On Front 6 (second choice page), disable next until choice is made
         nextBtn.disabled = secondChoice === null;
-    } else if (currentLocation >= 8) {
+    } else if (currentLocation >= 7) {
         // On final page, disable next button
         nextBtn.disabled = true;
     } else {
@@ -251,16 +251,28 @@ document.addEventListener('click', function(e) {
     console.log('Click detected on:', e.target);
     console.log('Current location:', currentLocation);
     console.log('Has choice-btn class:', e.target.classList.contains('choice-btn'));
+    console.log('Has restart-btn class:', e.target.classList.contains('restart-btn'));
     
+    // Handle restart button clicks first - check both direct clicks and clicks within the button
+    if (e.target.classList.contains('restart-btn') || e.target.closest('.restart-btn')) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Restart button clicked');
+        restartComic();
+        return;
+    }
+    
+    // Handle choice button clicks
     if (e.target.classList.contains('choice-btn')) {
         const choice = e.target.getAttribute('data-choice');
         console.log('Choice button clicked:', choice);
         
         // Handle choice for all pages (including Front 6)
         handleChoice(choice);
+        return;
     }
     
-    // Also check if we're at location 6 and clicked on paper5 or paper6 (z-index workaround)
+    // Only handle Front 6 z-index workaround when we're actually at location 6
     if (currentLocation === 6 && (e.target.id === 'p5' || e.target.id === 'p6' || e.target.closest('#p5') || e.target.closest('#p6'))) {
         console.log('Front 6 area clicked (z-index workaround)');
         // Determine choice based on click position
@@ -270,6 +282,19 @@ document.addEventListener('click', function(e) {
         console.log('Detected choice:', choice);
         handleChoice(choice);
         return;
+    }
+    
+    // Log when clicks are not handled
+    if (currentLocation >= 7) {
+        console.log('Click on final page - no action needed');
+        // Additional check for restart button on final page
+        if (e.target.closest('#f7') && e.target.closest('.restart-btn')) {
+            console.log('Restart button detected via closest method');
+            e.preventDefault();
+            e.stopPropagation();
+            restartComic();
+            return;
+        }
     }
 });
 
@@ -283,31 +308,13 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Front 6 buttons not found');
     }
     
-    // Add event listener for restart button
+    // Check if restart button exists (event listener is handled in main click handler)
     const restartBtn = document.querySelector('.restart-btn');
     if (restartBtn) {
-        console.log('Restart button found and event listener added');
-        restartBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log('Restart button clicked via event listener');
-            alert('Restart button clicked! Testing final button functionality.');
-            restartComic();
-        });
+        console.log('Restart button found');
     } else {
         console.log('Restart button not found');
     }
-    
-    // Also add a global click handler for restart buttons (in case the button is dynamically created)
-    document.addEventListener('click', function(e) {
-        if (e.target.classList.contains('restart-btn')) {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log('Restart button clicked via global handler');
-            alert('Restart button clicked! Testing final button functionality.');
-            restartComic();
-        }
-    });
     
     // Initialize the book to show Back 1 and Front 2
     openBook();
@@ -340,6 +347,12 @@ function closeBook(isAtBeginning) {
 // Arrow positioning is now handled by CSS
 
 function handleChoice(choice) {
+    // Only handle choices when we're on the appropriate pages
+    if (currentLocation !== 4 && currentLocation !== 6) {
+        console.log('Choice made but not on a choice page, ignoring');
+        return;
+    }
+    
     // Play page sound when choice is made
     playPageSound();
     
@@ -532,34 +545,11 @@ function goPrevPage() {
 
 
 function restartComic() {
-    // Stop all audio
+    console.log('Restarting comic by reloading page...');
+    
+    // Stop all audio before reloading
     stopAllAudio();
     
-    // Reset all variables
-    currentLocation = 2;
-    firstChoice = null;
-    secondChoice = null;
-    
-    // Reset all papers
-    const papers = [paper1, paper2, paper3, paper4, paper5, paper6, paper7];
-    papers.forEach(paper => {
-        paper.classList.remove("flipped");
-    });
-    
-    // Reset z-indexes
-    paper1.style.zIndex = 7;
-    paper2.style.zIndex = 6;
-    paper3.style.zIndex = 5;
-    paper4.style.zIndex = 4;
-    paper5.style.zIndex = 3;
-    paper6.style.zIndex = 2;
-    paper7.style.zIndex = 1;
-    
-    // Reset book position
-    closeBook(true);
-    
-    // Update navigation buttons
-    updateNavigationButtons();
-    
-    console.log('Comic restarted');
+    // Reload the page to start from the beginning
+    window.location.reload();
 }

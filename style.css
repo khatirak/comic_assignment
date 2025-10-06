@@ -118,6 +118,7 @@ body.index-page {
     padding: 40px;
     border-radius: 15px;
     text-align: center;
+    position: relative; /* Ensure z-index applies so Start button stays above walrus */
     z-index: 10;
     display: flex;
     flex-direction: column;
@@ -508,9 +509,11 @@ body.index-page {
 
 /* Ensure restart button is always clickable */
 .restart-btn {
-    z-index: 3000 !important; /* Highest priority for restart button */
+    z-index: 9999 !important; /* Highest priority for restart button */
     position: relative;
     pointer-events: auto;
+    cursor: pointer;
+    isolation: isolate; /* Create new stacking context */
 }
 
 /* Ensure the final page front content container has proper z-index */
@@ -588,21 +591,15 @@ img {
     border: 2px solid var(--accent-color);
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
-
-/* Z-index organization - Clear hierarchy */
-/* Base elements: 1-99 */
-/* Navigation: 100-999 */
-/* Interactive elements: 1000-1999 */
-/* Modals and overlays: 2000+ */
-
 /* Paper stack order - Comic pages */
-#p1 { z-index: 7; }
-#p2 { z-index: 6; }
-#p3 { z-index: 5; }
-#p4 { z-index: 4; }
-#p5 { z-index: 3; }
-#p6 { z-index: 2; }
-#p7 { z-index: 1; }
+#p1 { z-index: 8; }
+#p2 { z-index: 7; }
+#p3 { z-index: 6; }
+#p4 { z-index: 5; }
+#p5 { z-index: 4; }
+#p6 { z-index: 3; }
+#p7 { z-index: 2; }
+#p8 { z-index: 1; }
 
 
 /* Controller Buttons */
@@ -736,9 +733,11 @@ img {
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     font-family: 'Comic Sans MS', cursive, sans-serif;
     position: relative;
-    z-index: 3000 !important; /* Highest z-index to ensure it's clickable */
+    z-index: 9999 !important; /* Highest z-index to ensure it's clickable */
     pointer-events: auto; /* Ensure button can receive clicks */
     display: inline-block; /* Ensure proper display */
+    isolation: isolate; /* Create new stacking context */
+    transform: translateZ(0); /* Force hardware acceleration */
 }
 
 .restart-btn:hover {
