@@ -551,7 +551,7 @@ img {
 
 .front-content h2 {
     margin: 20px 0;
-    font-size: 1.3em;
+    font-size: 1.7em;
     text-align: center;
     color: #333;
 }
@@ -668,6 +668,31 @@ img {
 
 .choice-btn:active {
     transform: translateY(0);
+}
+
+/* Pastel styles for Yes/No buttons (apply to both choice pages) */
+.choice-btn[data-choice="yes"] {
+    background-color: #4F7FC5; /* blue for yes */
+    color: #ffffff;
+    border: 2px solid #3E6AA1;
+}
+
+.choice-btn[data-choice="yes"]:hover {
+    background-color: #3E6AA1;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 15px rgba(62, 106, 161, 0.25);
+}
+
+.choice-btn[data-choice="no"] {
+    background-color: #BA3F37; /* red for no */
+    color: #ffffff;
+    border: 2px solid #8E2F29;
+}
+
+.choice-btn[data-choice="no"]:hover {
+    background-color: #8E2F29;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 15px rgba(186, 63, 55, 0.25);
 }
 
 

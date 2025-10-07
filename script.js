@@ -514,6 +514,9 @@ function handleChoice(choice) {
             addCaptionToElement('choice-image-3', 'Sally invites Wally to her home.');
         }
         
+        // Update the question shown on Front 6 based on the first choice
+        updateFront6Question();
+        
         // Update navigation buttons after choice is made
         updateNavigationButtons();
         
@@ -548,6 +551,19 @@ function addCaptionToElement(elementId, captionText) {
         caption.className = 'caption';
         caption.textContent = captionText;
         element.parentElement.appendChild(caption);
+    }
+}
+
+function updateFront6Question() {
+    const questionElement = document.querySelector('#f6 h2');
+    if (!questionElement) return;
+    
+    if (firstChoice === 'yes') {
+        questionElement.textContent = 'Should Wally risk leaving?';
+    } else if (firstChoice === 'no') {
+        questionElement.textContent = 'Should Wally follow Sally?';
+    } else {
+        questionElement.textContent = 'What should Wally do next?';
     }
 }
 
@@ -614,6 +630,11 @@ function goNextPage() {
         }
         currentLocation++;
         console.log('Current location:', currentLocation);
+        
+        // When arriving at Front 6, ensure the question reflects the chosen route (5a vs 5b)
+        if (currentLocation === 6) {
+            updateFront6Question();
+        }
         
         // Play ending sound when reaching the final page (location 7)
         if (currentLocation === 7) {
